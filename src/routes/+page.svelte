@@ -1,2 +1,7 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+
+
+
+<div class="min-h-[calc(100vh-64px)] bg-red-100">
+    <h1>Welcome to papacontent</h1>
+    <p>babycontent</p>
+</div>
