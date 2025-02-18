@@ -1,3 +1,3 @@
-<div class="min-h-[calc(100vh-64px)] bg-pink-200">
+<div class="min-h-[calc(100vh-56px)] bg-blue-100">
     cdiavoorstelingef
 </div>

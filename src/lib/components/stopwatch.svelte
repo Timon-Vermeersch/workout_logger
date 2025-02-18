@@ -33,7 +33,7 @@
     }
 </script>
 
-<div class="bg-white p-4 border-1 shadow-2xlrounded-lg shadow text-center mt-4">
+<div class="bg-blue-100 p-4 rounded shadow-2xlrounded-lg shadow text-center m-4">
     <div class="text-3xl font-mono">{formatTime(timer)}</div>
     <div class="flex justify-around mt-4">
       <button on:click={startTimer} class="bg-green-500 text-white py-2 px-4 rounded">Start</button>
