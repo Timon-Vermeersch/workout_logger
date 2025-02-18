@@ -13,40 +13,6 @@
   };
   let date = new Date().toLocaleDateString("en-GB", options);
   let dateNl = new Date().toLocaleDateString("nl-BE", options);
-  // let exercises = [
-  //   {
-  //     name: "Flat Bench Press GIGAchadington",
-  //     sets: [
-  //       { previous: "10x10", current: "" },
-  //       { previous: "10x12", current: "" },
-  //       { previous: "16x8", current: "" },
-  //       { previous: "18x8", current: "" },
-  //       { previous: "22x8", current: "" },
-  //       { previous: "18x8", current: "" },
-  //     ]
-  //   },
-  //   {
-  //     name: "Incline Dumbbell Press",
-  //     sets: [
-  //       { previous: "10x10", current: "" },
-  //       { previous: "10x12", current: "" },
-  //       { previous: "10x12", current: "" },
-  //       { previous: "22x8", current: "" },
-  //       { previous: "18x8", current: "" },
-  //       { previous: "18x8", current: "" },
-  //     ]
-  //   },
-  //   {
-  //     name: "Incline Dumbbell Press",
-  //     sets: [
-  //       { previous: "10x10", current: "" },
-  //       { previous: "10x12", current: "" },
-  //       { previous: "10x12", current: "" },
-  //       { previous: "22x8", current: "" },
-  //       { previous: "18x8", current: "" },
-  //       { previous: "18x8", current: "" },
-  //     ]
-  //   },];
   let exercises2 = [
     {
       name: "Flat Bench Press" , 
@@ -105,23 +71,24 @@
           <div class="text-center text-gray-700 font-bold mb-4">
             <div class="bg-gray-800 text-white py-2 rounded">{date}</div>
           </div>
-          <Stopwatch></Stopwatch>
+          
   <!-- Abegin -->
-    <div class="flex flex-col space-y-4">
+    <div class="flex flex-col flex-auto space-y-4">
+      
       {#each exercises2 as exercise, index}
         <div class="bg-white p-4 rounded-lg shadow">
           <div class="grid grid-cols-2 mb-2">
             <!-- Title -->
             <h2 class=" Title flex flex-col flex-wrap font-semibold">{index+1}: {exercise.name} <div class="text-xs text-gray-900 mb-1">4 Sets : 12 Reps</div></h2>
             <!-- Buttons -->
-            <div class=" Buttons flex allign-center space-x-2 h-12 items-center ">
-              <button class="rounded-lg bg-blue-100 text-blue-500 p-4 hover:underline active:scale-90 active:bg-gray-200">
+            <div class=" Buttons flex allign-center justify-end space-x-2 h-12 items-center m-1 ">
+              <button class="rounded-lg bg-blue-100 text-blue-500 p-2 hover:underline active:scale-90 active:bg-gray-200">
                 <img class='w-5 h-5' src="less.svg" alt="">
               </button>
-              <button class="rounded-lg bg-red-100 text-blue-500 p-4 hover:underline active:scale-90 active:bg-gray-200">
+              <button class="rounded-lg bg-red-100 text-blue-500 p-2 hover:underline active:scale-90 active:bg-gray-200">
                 <img class='w-5 h-5' src="more.svg" alt="">
               </button>
-              <button class="rounded-lg bg-red-100 text-blue-500 p-4 hover:underline active:scale-90 active:bg-gray-200">⇆</button>
+              <button class="rounded-lg bg-red-100 text-blue-500 p-2 hover:underline active:scale-90 active:bg-gray-200">⇆</button>
             </div>
             
           </div>
