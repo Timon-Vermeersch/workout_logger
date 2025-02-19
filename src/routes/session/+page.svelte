@@ -2,80 +2,40 @@
   import Stopwatch from '../../lib/components/stopwatch.svelte' 
   import '../../../static/less.svg' 
   import '../../../static/more.svg' 
-  
-  const options = {
+  import {personalProgram} from '../../lib/stores/data_store.ts'
+
+  // let w = window.innerWidth;
+  // let h = window.innerHeight;
+
+  const options : Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
     timeZone: "CET",
-    timeZoneName: "short",
   };
-  let date = new Date().toLocaleDateString("en-GB", options);
-  let dateNl = new Date().toLocaleDateString("nl-BE", options);
-  let exercises2 = [
-    {
-      name: "Flat Bench Press" , 
-      sets: [
-        {Previous: '12x432' , set:{set: '12' , rep: '432'}},
-        {Previous: '12x53' , set:{set: '12' , rep: '54'}},
-        {Previous: '11x11' , set:{set: '11' , rep: '11'}},
-        {Previous: '11x2' , set:{set: '11' , rep: '2'}},
-        {Previous: '2x31' , set:{set: '2' , rep: '31'}},
-        {Previous: '4x1' , set:{set: '4' , rep: '1'}},
-        {Previous: '3x313' , set:{set: '3' , rep: '414'}},
-        {Previous: '12x33' , set:{set: '12' , rep: '44'}},
-        
-  ]},
-  {
-      name: "Incline Bench Press" , 
-      sets: [
-        {Previous: '12x32' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        
-  ]},
-  {
-      name: "Incline Bench Press" , 
-      sets: [
-        {Previous: '12x32' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        {Previous: '10x10' , set:{set: '' , rep: ''}},
-        
-  ]}
-  ]
-  
-  date = date.slice(0, -9);
-  dateNl = dateNl.slice(0, -9);
-  
-  // let datesLocalise = {
-  //   'en-GB': date,
-  //   'nl-BE': dateNl
-  // };
-  
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(new Date());
+
+
+ 
+
+ 
+
     
   </script>
     
   <div class="min-h-[calc(100vh-64px)]">
       <div class="p-4 bg-stone-500 min-h-screen">
           <div class="text-center text-gray-700 font-bold mb-4">
-            <div class="bg-gray-800 text-white py-2 rounded">{date}</div>
+            <div class="bg-gray-800 text-white p-4 rounded overflow-visible ">{formattedDate}</div>
           </div>
-          
+        
   <!-- Abegin -->
+  
+    <Stopwatch></Stopwatch>
+
     <div class="flex flex-col flex-auto space-y-4">
-      
-      {#each exercises2 as exercise, index}
+      {#each $personalProgram as exercise, index}
         <div class="bg-white p-4 rounded-lg shadow">
           <div class="grid grid-cols-2 mb-2">
             <!-- Title -->
