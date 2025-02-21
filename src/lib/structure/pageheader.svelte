@@ -10,7 +10,7 @@
 </script>
 
 {#if type === 'mobile'}
-  <div class=" bg-white rounded-md bg-clip-padding backdrop-filter border border-black fixed bottom-0 left-0 right-0 h-14 border-t-2 border-b-0 bg-grey-800 flex items-center justify-around space-x-2 overflow-x-none">
+  <div class=" bg-white rounded-md bg-clip-padding backdrop-filter border border-black h-14 border-t-2 border-b-0 bg-grey-800 flex items-center justify-around space-x-2 overflow-x-none">
     
     <a href="/nutrition">
       <div class="flex flex-col justify-center border-2 items-center h-9 w-9 rounded-xl hover:scale-110 transition-transform duration-300" class:bg-blue-300={page.url.pathname === '/nutrition'}>
