@@ -71,9 +71,9 @@ console.log(selectedToBuild)
    
     <div class='flex justify-center'>Buildrrr!</div>
 
-    <select bind:value={selectedToBuildName}  on:change={setBuild} class='flex justify-center items-center bg-gray-800 text-white '>
+    <select bind:value={selectedToBuildName} on:change={setBuild} class="flex justify-center items-center bg-gray-800 text-white text-center">
         {#each availablePrograms as availableProgram}
-            <option class='flex justify-center align-center'  value="{availableProgram.name}">{availableProgram.name}</option>
+            <option value="{availableProgram.name}">{availableProgram.name}</option>
         {/each}
     </select>
     
@@ -95,8 +95,8 @@ console.log(selectedToBuild)
                         <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
                             <div class="grid grid-cols-3 text-md font-bold text-white mb-1">
                                 <div class="flex justify-center items-center">{exercise.exercise}</div>
-                                <div class="flex justify-center items-center"><img class='w-5 h-5' src="less.svg" alt=""></div>
-                                <div class="flex justify-center items-center"><img class='w-5 h-5' src="more.svg" alt=""></div>
+                                <div class="flex justify-center items-center"><img class='w-5 h-5 filter invert brightness-0' src="less.svg" alt=""></div>
+                                <div class="flex justify-center items-center"><img class='w-5 h-5 filter invert brightness-0' src="more.svg" alt=""></div>
                             </div>
                             
             
@@ -117,14 +117,6 @@ console.log(selectedToBuild)
             </CollapsibleSection>
             {/each}
         </div>
-
-
-
-
-
-
-
-
 
             {:else}
                 Please select a program at the top!
