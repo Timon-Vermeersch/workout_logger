@@ -45,5 +45,8 @@
 	  <PageHeader {type}/>
 	  {@render children()}
 	{/if}
+	
+
+
   {/if}
   

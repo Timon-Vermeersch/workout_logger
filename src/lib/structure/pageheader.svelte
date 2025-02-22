@@ -8,7 +8,7 @@
   
   let { type } = $props();
 </script>
-
+<!-- Header -->
 {#if type === 'mobile'}
   <div class=" bg-white rounded-md bg-clip-padding backdrop-filter border border-black h-14 border-t-2 border-b-0 bg-grey-800 flex items-center justify-around space-x-2 overflow-x-none">
     
@@ -32,9 +32,9 @@
       </div>
     </a>
 
-    <a href="/stats">
-      <div class="flex justify-center border-2 items-center h-9 w-9 rounded-xl hover:scale-110 transition-transform duration-300" class:bg-blue-300={page.url.pathname === '/stats'}>
-        <img src="book.svg" alt="Stats">
+    <a href="/builder">
+      <div class="flex justify-center border-2 items-center h-9 w-9 rounded-xl hover:scale-110 transition-transform duration-300" class:bg-blue-300={page.url.pathname === '/builder'}>
+        <img src="book.svg" alt="builder">
         <span class="absolute bottom-[-3px] rounded-full text-md font-medium text-center"></span>
       </div>
     </a>
