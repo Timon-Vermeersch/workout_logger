@@ -2,7 +2,7 @@
   import Stopwatch from '../../lib/components/stopwatch.svelte' 
   import more from '../../lib/svg/more.svg'
   import less from  '../../lib/svg/less.svg'
-  import {personalProgram} from '../../lib/stores/data_store.ts'
+  import {personalProgram} from '../../lib/stores/data_store'
 
   // let w = window.innerWidth;
   // let h = window.innerHeight;
@@ -25,7 +25,7 @@
   </script>
     
     <div class=" bg-gray-700">
-      <div class="p-4 bg-gray-700 min-h-screen">
+      <div class="p-4 bg-gray-700">
         <div class="text-center text-gray-200 font-bold mb-4">
           <div class="bg-gray-800 text-white p-4 rounded overflow-visible">{formattedDate}</div>
         </div>
@@ -33,7 +33,7 @@
         <!-- Abegin -->
         <Stopwatch></Stopwatch>
     
-        <div  class="  bg flex flex-col flex-auto space-y-4 mb-16">
+        <div  class="  bg flex flex-col flex-auto space-y-4">
           {#each $personalProgram as exercise, index}
             <div class="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
               <div class="grid grid-cols-2 mb-2">
@@ -65,7 +65,7 @@
               <div>
                 <div class="text-xs text-gray-400 mb-1">Current Series:</div>
                 <div class="flex flex-row overflow-x-auto">
-                  {#each exercise.sets as set, index}
+                  {#each exercise.sets as set}
                 <div class="flex w-15 m-1 flex-col items-center">
                   <input bind:value={set.set.set} type="number" class="text-sm w-14 h-7 border-t border-l border-r bg-green-600 text-white" placeholder="Reps?" />
                   <input bind:value={set.set.rep} type="number" class="text-sm w-14 h-7 border-b border-l border-r  bg-blue-600 text-white" placeholder="Kg?" />
