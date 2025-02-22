@@ -1,8 +1,8 @@
 <script>
     import Dialog from '../../lib/components/dialog.svelte'
     import CollapsibleSection from '$lib/components/CollapsibleSection.svelte';
-    import '../../../static/more.svg'
-    import '../../../static/less.svg'
+    import more from '../../lib/svg/more.svg'
+    import less from '../../lib/svg/less.svg'
 
     let dialog;
     let selectedToBuildName = '';
@@ -64,7 +64,7 @@ function setBuildTemp() {
     selectedToBuild = availablePrograms.find(program => program.name === 'Hypertrophy')
 }
 setBuildTemp()
-console.log(selectedToBuild)
+
 </script>
 <!-- title -->
 <div class= 'div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12   '>
@@ -95,8 +95,8 @@ console.log(selectedToBuild)
                         <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
                             <div class="grid grid-cols-3 text-md font-bold text-white mb-1">
                                 <div class="flex justify-center items-center">{exercise.exercise}</div>
-                                <div class="flex justify-center items-center"><img class='w-5 h-5 filter invert brightness-0' src="less.svg" alt=""></div>
-                                <div class="flex justify-center items-center"><img class='w-5 h-5 filter invert brightness-0' src="more.svg" alt=""></div>
+                                <div class="flex justify-center items-center"><img class='w-5 h-5 filter invert brightness-0' src={less} alt=""></div>
+                                <div class="flex justify-center items-center"><img class='w-5 h-5 filter invert brightness-0' src={more} alt=""></div>
                             </div>
                             
             

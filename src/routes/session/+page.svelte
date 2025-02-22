@@ -1,7 +1,7 @@
 <script lang="ts">
   import Stopwatch from '../../lib/components/stopwatch.svelte' 
-  import '../../../static/less.svg' 
-  import '../../../static/more.svg' 
+  import more from '../../lib/svg/more.svg'
+  import less from  '../../lib/svg/less.svg'
   import {personalProgram} from '../../lib/stores/data_store.ts'
 
   // let w = window.innerWidth;
@@ -24,7 +24,7 @@
     
   </script>
     
-    <div class="min-h-[calc(100vh-64px)] bg-gray-700">
+    <div class=" bg-gray-700">
       <div class="p-4 bg-gray-700 min-h-screen">
         <div class="text-center text-gray-200 font-bold mb-4">
           <div class="bg-gray-800 text-white p-4 rounded overflow-visible">{formattedDate}</div>
@@ -33,7 +33,7 @@
         <!-- Abegin -->
         <Stopwatch></Stopwatch>
     
-        <div class="flex flex-col flex-auto space-y-4 mb-16">
+        <div  class="  bg flex flex-col flex-auto space-y-4 mb-16">
           {#each $personalProgram as exercise, index}
             <div class="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
               <div class="grid grid-cols-2 mb-2">
@@ -44,15 +44,15 @@
                 <!-- Buttons -->
                 <div class="Buttons flex align-center justify-end space-x-2 h-12 items-center m-1">
                   <button class="rounded-lg bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90">
-                    <img class='w-5 h-5 filter invert brightness-0' src="less.svg" alt="">
+                    <img class='w-5 h-5 filter invert brightness-0' src={less} alt="">
                   </button>
                   <button class="rounded-lg bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90">
-                    <img class='w-5 h-5 filter invert brightness-0' src="more.svg" alt="">
+                    <img class='w-5 h-5 filter invert brightness-0' src={more} alt="">
                   </button>
                   <button class="rounded-lg bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90">⇆</button>
                 </div>
               </div>
-    
+              
               <div class="mb-4">
                 <div class="text-xs text-gray-400 mb-1">Previous Series:</div>
                 <div class="flex flex-row overflow-x-auto">
