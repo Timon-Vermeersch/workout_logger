@@ -35,14 +35,12 @@
 	</div>
   {:else}
 	{#if isMobile}
-
-	  {@render children()}
-	  <PageHeader {type}/>
-<!-- OR -->
-	<!-- <div class='flex-col'>
-		<div class=' flex-end'>{@render children()}</div>
-		<div class=' flex-start'><PageHeader {type}/></div>
-	</div> -->
+	<div class='flex flex-col h-screen'>
+		<div class="flex-1 overflow-auto">
+			{@render children()}
+		</div>
+		  <PageHeader {type}/>
+	</div>
 	{:else}
 	  <PageHeader {type}/>
 	  {@render children()}
