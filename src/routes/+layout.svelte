@@ -35,11 +35,11 @@
 	</div>
   {:else}
 	{#if isMobile}
-	<div class='flex flex-col h-screen'>
+	<div class='flex flex-col h-dvh'>
 		<div class="flex-1 overflow-auto">
 			{@render children()}
 		</div>
-		  <PageHeader {type}/>
+			<PageHeader {type}/>
 	</div>
 	{:else}
 	  <PageHeader {type}/>
