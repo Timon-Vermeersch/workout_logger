@@ -57,7 +57,7 @@
   <button class='flex justify-center' on:click={() => dialog.showModal()}>Plus(+)</button>
 </div>
 
-<!-- body -->
+<!--body -->
 <div class="BODY min-h-[calc(100vh-56px)] text-black bg-gray-700">
   <div class="flex flex-col flex-auto space-y-4">
       <div>
@@ -98,4 +98,4 @@
           {/if}
       </div>
   </div>
-</div>
+</div> 
