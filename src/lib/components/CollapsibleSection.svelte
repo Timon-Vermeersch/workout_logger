@@ -41,18 +41,19 @@ button[aria-expanded="true"] {
   border-bottom: 1px solid var(--gray-400, #6b7280);
 }
 
+/* 
 button[aria-expanded="true"] .vert {
   display: none;
-}
+} */
 
 button:focus svg {
   outline: 2px solid var(--gray-500, #6b7280);
   outline-offset: 2px;
 }
 
-button[aria-expanded="true"] rect {
+/* button[aria-expanded="true"] rect {
   fill: currentColor;
-}
+} */
 
 svg {
   height: 1em;

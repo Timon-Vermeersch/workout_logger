@@ -18,7 +18,7 @@ dialog {
     transform: translate(-50%, -50%);
 
     border-radius: var(--border-radius);
-    border-width: 1px;
+    border-width:0px;
     transition: all 2s;
     animation: vanish 1s;
     
