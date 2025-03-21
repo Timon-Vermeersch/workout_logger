@@ -3,6 +3,21 @@ import { writable } from 'svelte/store';
 // exercisesList[x].sets[y].Previous -> to access the previous value
 // exercisesList[x].sets[y].set.set -> to access the set value
 // exercisesList[x].sets[y].set.rep -> to access the rep value
+
+// exerciseHistory[0].name = Squat
+// exerciseHistory[0].name.history[1]
+
+export const exerciseHistory = writable(
+    [
+        {name: 'Squat',
+          history:[
+            {dateTime:[{12 : 20}, {8 : 20}, {6 : 20}, {4 : 20}]},
+            {dateTime:[{12 : 20}, {12 : 20}, {8 : 20}, {4 : 20}]},
+            
+        ]                     
+        },
+    ]
+)
 export const excercisesList = writable([
     {
         name: "Squat",
@@ -15,49 +30,7 @@ export const excercisesList = writable([
         sets: [
             { Previous: '', set: { set: '', rep: '' } },
         ]
-    },
-    {
-        name: "Leg Press2 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
-    {
-        name: "Leg Press3 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
-    {
-        name: "Leg Press4 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
-    {
-        name: "Leg Press5 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
-    {
-        name: "Squat4 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
-    {
-        name: "Leg Press4 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
-    {
-        name: "Squat4 ",
-        sets: [
-            { Previous: '', set: { set: '', rep: '' } },
-        ]
-    },
+    },    
 ])
 
 
@@ -69,7 +42,7 @@ export const personalProgram = writable([
     {
         name: "Flat Barbell Bench Press",
         sets: [
-            { Previous: '12x432', set: { set: '12', rep: '432' } },
+            { Previous: '12x432', set: [1,2,3,4]},
             { Previous: '12x53', set: { set: '12', rep: '54' } },
             { Previous: '11x11', set: { set: '11', rep: '11' } },
             { Previous: '11x2', set: { set: '11', rep: '2' } },
@@ -137,11 +110,23 @@ export const ExcerciseOptions = writable([
   }
 ])
 
-export const availablePrograms = writable([
+// export interface exercise {
+//   exercise:string; 
+//   sets:Array<number>:
+// }
+// export interface program {
+//   name:string;
+//   days:Array<exercise>
+// }
+
+// writable<Array<program>>([
+  
+export const availablePrograms =  writable([
     {
       name: 'Hypertrophy', 
       days: {
         1: [
+          // {}
           { exercise: 'Bench Press', sets:{ 'set 1': 8, 'set 2': 8, 'set 3': 8,'set 4': 8, 'set 5': 8 }},
           { exercise: 'Incline Dumbbell Press', sets:{ set1: 8, set2: 8, set3: 8, set4: 8, set5: 8 }},
           { exercise: 'Incline Dumbbell Press', sets:{ set1: 8, set2: 8, set3: 8, set4: 8, set5: 8 }}

@@ -99,3 +99,8 @@
       </div>
   </div>
 </div> 
+
+<Dialog bind:dialog on:close={() => console.log('closed')}>
+         <img src="https://open.lib.umn.edu/app/uploads/sites/208/2019/02/uterus-left-300x208.png" alt="">
+         press escape to close
+</Dialog>
