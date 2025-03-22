@@ -3,7 +3,7 @@
   import more from '../../lib/svg/more.svg';
   import less from '../../lib/svg/less.svg';
   import Dialog from '../../lib/components/dialog.svelte';
-  import { personalProgram, excercisesList } from '../../lib/stores/data_store';
+  import { personalProgram, Exerciseslist } from '../../lib/stores/data_store';
 
   let dialog;
   let selectedExerciseIndex = null;
@@ -138,7 +138,7 @@
 
     <!-- Scrollable list with max height -->
     <div class="space-y-3 max-h-64 overflow-y-auto">
-      {#each $excercisesList as exercise}
+      {#each $Exerciseslist as exercise}
         <button
           class={`block w-full p-3 rounded ${selectedSwapExercise === exercise ? 'bg-green-700' : 'bg-gray-600'} hover:bg-gray-500`}
           on:click={() => selectedSwapExercise = exercise}

@@ -4,7 +4,7 @@
   import CollapsibleSection from '$lib/components/CollapsibleSection.svelte';
   import more from '../../lib/svg/more.svg';
   import less from '../../lib/svg/less.svg';
-  import { availablePrograms } from '../../lib/stores/data_store';
+  import { builtPrograms } from '../../lib/stores/data_store';
 
   let dialog;
   let selectedToBuildName = '';
@@ -12,20 +12,20 @@
 
   // Initialize in onMount to avoid accessing store before it's ready
   onMount(() => {
-      selectedToBuildName = $availablePrograms[0]?.name || '';
+      selectedToBuildName = $builtPrograms[0]?.name || '';
       setBuild();
   });
 
   function setBuild() {
-      selectedToBuild = $availablePrograms.find(program => program.name === selectedToBuildName);  
+      selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName);  
   }
 
   function setBuildTemp() {
-      selectedToBuild = $availablePrograms.find(program => program.name === 'Hypertrophy');
+      selectedToBuild = $builtPrograms.find(program => program.name === 'Hypertrophy');
   }
 
   function addSet(index) {
-      availablePrograms.update(program => {
+      builtPrograms.update(program => {
           const updatedProgram = [...program];
           const newSet = { Previous: '', set: { set: '', rep: '' } };
           updatedProgram[index].sets.push(newSet);
@@ -34,7 +34,7 @@
   }
 
   function removeSet(index) {
-      availablePrograms.update(program => {
+      builtPrograms.update(program => {
           const updatedProgram = [...program];
           updatedProgram[index].sets.pop();
           return updatedProgram;
@@ -49,7 +49,7 @@
   <div class='flex justify-center'>Buildrrr!</div>
 
   <select bind:value={selectedToBuildName} on:change={setBuild} class="flex justify-center items-center bg-gray-800 text-white text-center">
-      {#each $availablePrograms as availableProgram}
+      {#each $builtPrograms as availableProgram}
           <option value="{availableProgram.name}">{availableProgram.name}</option>
       {/each}
   </select>
