@@ -1,11 +1,11 @@
 export interface ExerciseSet {
-	id: number;
-	setNumber: number;
-	weight: number;
-	reps: number;
-	wrapsUsed: boolean;
-	strapsUsed: boolean;
-	sleevesUsed: boolean;
+	setNumber: number; // which set your on , 1-2 etc
+	weight: number; //432
+	reps: number; //12
+	wrapsUsed?: boolean;
+	strapsUsed?: boolean;
+	sleevesUsed?: boolean;
 	rpe?: number;
 	extraNote?: string;
+	previous?: string;
 }
