@@ -16,11 +16,10 @@
   }
 
   function confirmSwap() {
-    console.log('checkok', selectedExerciseIndex, selectedSwapExercise)
     if ( selectedExerciseIndex !== null  &&  selectedSwapExercise) {
       personalProgram.update(program => {
       const copyProgram = {...program};
-        copyProgram.exercises[selectedExerciseIndex] = selectedSwapExercise;
+        copyProgram.exercises[selectedExerciseIndex].exercise = selectedSwapExercise;
       return copyProgram;
     });
       dialog.close();
