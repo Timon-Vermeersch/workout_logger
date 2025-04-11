@@ -19,7 +19,9 @@
     if ( selectedExerciseIndex !== null  &&  selectedSwapExercise) {
       personalProgram.update(program => {
       const copyProgram = {...program};
-        copyProgram.exercises[selectedExerciseIndex].exercise = selectedSwapExercise;
+      const currentPlannedExecise = copyProgram.exercises[selectedExerciseIndex];
+      currentPlannedExecise.exercise = selectedSwapExercise;
+      currentPlannedExecise.sets = [];
       return copyProgram;
     });
       dialog.close();
