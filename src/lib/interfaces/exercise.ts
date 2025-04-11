@@ -5,7 +5,7 @@ export interface Exercise {
 	name: string;
 	exerciseGif?: string;
 	explanation?: string;
-	muscleGroups: Array<musleGroupTypes>;
+	muscleGroups: Set<musleGroupTypes>;
 	exerciseHistory?: ExerciseHistory;
 }
 

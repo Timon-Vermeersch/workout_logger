@@ -1,4 +1,5 @@
 import type { BuiltPrograms } from '$lib/interfaces/builtPrograms';
+import type { GlobalExerciselist } from '$lib/interfaces/global-exercise-list';
 import type { ProgramDay } from '$lib/interfaces/programDay';
 import { writable } from 'svelte/store';
 // exercisesList[x].name -> to access the exercise name
@@ -22,16 +23,18 @@ export const exerciseHistory = writable([
  * TODO:Timon do this pls
  * change ths to the GlobalExcerciseList interface and fix the +page.svelte of routes/session
  */
-export const Exerciseslist = writable([
-	{
-		name: 'Squat',
-		sets: [{ Previous: '', set: { set: '', rep: '' } }]
-	},
-	{
-		name: 'Leg Press1 ',
-		sets: [{ Previous: '', set: { set: '', rep: '' } }]
-	}
-]);
+export const Exerciseslist = writable<GlobalExerciselist>(
+{
+	exercises: [
+		{
+			id: 1,
+			name: 'Flat Bench Press',
+			explanation: 'just bench BRO',
+			muscleGroups: new Set(['chest' , 'triceps'])
+		}
+	]
+}
+);
 
 export const personalProgram = writable<ProgramDay>({
 	dayNumber: 1,
@@ -41,8 +44,8 @@ export const personalProgram = writable<ProgramDay>({
 				id: 1,
 				name: 'Flat Barbell Bench Press',
 				exerciseGif: '',
-				explanation: 'just bech press bro',
-				muscleGroups: ['chest']
+				explanation: 'just bench press bro',
+				muscleGroups: new Set(['chest'])
 			},
 			date: '1/04/2025',
 			sets: [
@@ -57,7 +60,7 @@ export const personalProgram = writable<ProgramDay>({
 				name: 'Cable Chest Fly ',
 				exerciseGif: '',
 				explanation: 'just bech press bro',
-				muscleGroups: ['chest']
+				muscleGroups: new Set(['chest'])
 			},
 			date: '1/04/2025',
 			sets: [
@@ -71,8 +74,8 @@ export const personalProgram = writable<ProgramDay>({
 				id: 3,
 				name: 'Incline Barbell Bench Press',
 				exerciseGif: '',
-				explanation: 'just bech press bro',
-				muscleGroups: ['chest']
+				explanation: 'just bench press bro',
+				muscleGroups: new Set(['chest'])
 			},
 			date: '1/04/2025',
 			sets: [
@@ -87,7 +90,7 @@ export const personalProgram = writable<ProgramDay>({
 				name: 'Triceps Rope Pushdowns',
 				exerciseGif: '',
 				explanation: 'just bech press bro',
-				muscleGroups: ['chest']
+				muscleGroups: new Set(['chest'])
 			},
 			date: '1/04/2025',
 			sets: [
@@ -102,7 +105,7 @@ export const personalProgram = writable<ProgramDay>({
 				name: 'Triceps Rope Pushdowns',
 				exerciseGif: '',
 				explanation: 'just bech press bro',
-				muscleGroups: ['chest']
+				muscleGroups: new Set(['chest'])
 			},
 			date: '1/04/2025',
 			sets: [
@@ -128,7 +131,7 @@ export const builtPrograms = writable<Array<BuiltPrograms>>([
 							name: 'ok',
 							exerciseGif: 'exerciseGifString',
 							explanation: 'explanationString',
-							muscleGroups: ['chest', 'etc'],
+							muscleGroups: new Set(['chest']),
 							exerciseHistoryId: 1,
 							exerciseHistory: {
 								exerciseId: 1,
@@ -167,7 +170,7 @@ export const builtPrograms = writable<Array<BuiltPrograms>>([
 							name: 'ok',
 							exerciseGif: 'exerciseGifString',
 							explanation: 'explanationString',
-							muscleGroups: ['chest', 'etc'],
+							muscleGroups: new Set(['chest']),
 							exerciseHistoryId: 1,
 							exerciseHistory: {
 								exerciseId: 1,

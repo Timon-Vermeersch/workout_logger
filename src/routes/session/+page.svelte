@@ -16,7 +16,8 @@
   }
 
   function confirmSwap() {
-    if (typeof selectedExerciseIndex === 'number'  && typeof selectedSwapExercise === 'number') {
+    console.log('checkok', selectedExerciseIndex, selectedSwapExercise)
+    if ( selectedExerciseIndex !== null  &&  selectedSwapExercise) {
       personalProgram.update(program => {
       const copyProgram = {...program};
         copyProgram.exercises[selectedExerciseIndex] = selectedSwapExercise;
@@ -140,7 +141,7 @@
 
     <!-- Scrollable list with max height -->
     <div class="space-y-3 max-h-64 overflow-y-auto">
-      {#each $Exerciseslist as exercise}
+      {#each $Exerciseslist.exercises as exercise}
         <button
           class={`block w-full p-3 rounded ${selectedSwapExercise === exercise ? 'bg-green-700' : 'bg-gray-600'} hover:bg-gray-500`}
           on:click={() => selectedSwapExercise = exercise}
