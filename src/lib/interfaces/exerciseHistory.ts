@@ -1,8 +1,6 @@
-import type { ExerciseSet } from "./exerciseSet";
-
+import type { ExerciseSet } from './exerciseSet';
 
 export interface ExerciseHistory {
-    exerciseId: number,
-    date: Date,
-    sets: Array<ExerciseSet>
+	date: Date;
+	sets: Array<ExerciseSet>;
 }
