@@ -18,6 +18,10 @@ export const exerciseHistory = writable([
 		]
 	}
 ]);
+/**
+ * TODO:Timon do this pls
+ * change ths to the GlobalExcerciseList interface and fix the +page.svelte of routes/session
+ */
 export const Exerciseslist = writable([
 	{
 		name: 'Squat',
