@@ -5,8 +5,8 @@ export interface Exercise {
 	name: string;
 	exerciseGif?: string;
 	explanation?: string;
-	muscleGroups: Set<musleGroupTypes>;
+	muscleGroups: Set<muscleGroupTypes>;
 	exerciseHistory?: ExerciseHistory;
 }
 
-export type musleGroupTypes = 'chest' | 'triceps' | 'back' | 'biceps';
+export type muscleGroupTypes = 'chest' | 'triceps' | 'back' | 'biceps';

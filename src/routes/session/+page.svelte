@@ -142,7 +142,7 @@
     <div class="space-y-3 max-h-64 overflow-y-auto">
       {#each $Exerciseslist.exercises as exercise}
         <button
-          class={`block w-full p-3 rounded ${selectedSwapExercise === exercise ? 'bg-green-700' : 'bg-gray-600'} hover:bg-gray-500`}
+          class={`block w-full p-3 rounded ${selectedSwapExercise === exercise ? 'bg-green-600' : 'bg-gray-600'} hover:bg-gray-500`}
           on:click={() => selectedSwapExercise = exercise}
         >
           {exercise.name}

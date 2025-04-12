@@ -66,9 +66,10 @@
                   {#each Object.entries(selectedToBuild.days) as [day, exercises], index}
                       <CollapsibleSection headerText={`Day ${index + 1}`}>
                           <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
-                              <h2 class="text-lg font-semibold text-white">Upper Body</h2>
+                              <h2 class="text-lg font-semibold text-white">Hardcoded Test</h2>
 
                               {#each exercises as exercise}
+                              
                                   <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
                                       <div class="grid grid-cols-3 text-md font-bold text-white mb-1">
                                           <div class="flex justify-center items-center">{exercise.exercise}</div>

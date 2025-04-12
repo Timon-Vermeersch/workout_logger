@@ -1,6 +1,9 @@
 import type { BuiltPrograms } from '$lib/interfaces/builtPrograms';
-import type { GlobalExerciselist } from '$lib/interfaces/global-exercise-list';
+import type { GlobalExerciselist, } from '$lib/interfaces/global-exercise-list';
 import type { ProgramDay } from '$lib/interfaces/programDay';
+import type {muscleGroupTypes } from '../interfaces/exercise'
+
+
 import { writable } from 'svelte/store';
 // exercisesList[x].name -> to access the exercise name
 // exercisesList[x].sets[y].Previous -> to access the previous value
@@ -21,20 +24,42 @@ export const exerciseHistory = writable([
 ]);
 /**
  * TODO:Timon do this pls
- * change ths to the GlobalExcerciseList interface and fix the +page.svelte of routes/session
+ * change ths to the GlobalExerciseList interface and fix the +page.svelte of routes/session
  */
-export const Exerciseslist = writable<GlobalExerciselist>(
-{
+export const Exerciseslist = writable<GlobalExerciselist>({
 	exercises: [
 		{
 			id: 1,
 			name: 'Flat Bench Press',
 			explanation: 'just bench BRO',
-			muscleGroups: new Set(['chest' , 'triceps'])
+			muscleGroups: new Set<muscleGroupTypes>(['chest', 'triceps'])
+		},
+		{
+			id: 2,
+			name: 'Pull-Ups',
+			explanation: 'bodyweight back builder',
+			muscleGroups: new Set<muscleGroupTypes>(['back', 'biceps'])
+		},
+		{
+			id: 3,
+			name: 'Incline Dumbbell Press',
+			explanation: 'upper chest focus',
+			muscleGroups: new Set<muscleGroupTypes>(['chest', 'triceps'])
+		},
+		{
+			id: 4,
+			name: 'Barbell Row',
+			explanation: 'targets lats and traps',
+			muscleGroups: new Set<muscleGroupTypes>(['back', 'biceps'])
+		},
+		{
+			id: 5,
+			name: 'Triceps Pushdown',
+			explanation: 'pump those horseshoes',
+			muscleGroups: new Set<muscleGroupTypes>(['triceps'])
 		}
 	]
-}
-);
+});
 
 export const personalProgram = writable<ProgramDay>({
 	dayNumber: 1,
