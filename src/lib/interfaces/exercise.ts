@@ -9,4 +9,8 @@ export interface Exercise {
 	exerciseHistory?: ExerciseHistory;
 }
 
-export type muscleGroupTypes = 'chest' | 'triceps' | 'back' | 'biceps';
+// export type muscleGroupTypes = 'chest' | 'triceps' | 'back' | 'biceps';
+
+export const muscleGroups = ['chest', 'triceps', 'back', 'biceps'] as const
+
+export type muscleGroupTypes = typeof muscleGroups[number]

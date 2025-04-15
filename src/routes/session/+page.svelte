@@ -95,17 +95,16 @@
               </button>
             </div>
           </div>
-
+<!-- Prev series -->
           <div class="mb-4">
             <div class="text-xs text-gray-400 mb-1">Previous Series:</div>
             <div class="flex flex-row overflow-x-auto">
               {#each plannedExercise.sets as set}
-               <!-- personalProgram[x].sets[y].Previous -> to access the previous set (format: 'reps x weight') -->
                 <input bind:value={set.previous} class="w-14 text-sm bg-gray-600 text-white rounded m-1" readonly />
               {/each}
             </div>
           </div>
-
+<!-- Current series -->
           <div>
             <div class="text-xs text-gray-400 mb-1">Current Series:</div>
             <div class="flex flex-row overflow-x-auto">

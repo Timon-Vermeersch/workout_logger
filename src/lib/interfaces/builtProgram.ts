@@ -1,6 +1,6 @@
 import type { ProgramDay } from './programDay';
 
-export interface BuiltPrograms {
+export interface builtProgram {
 	name: string;
 	days: Array<ProgramDay>;
 }

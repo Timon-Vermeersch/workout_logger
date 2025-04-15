@@ -1,8 +1,7 @@
-import type { BuiltPrograms } from '$lib/interfaces/builtPrograms';
-import type { GlobalExerciselist, } from '$lib/interfaces/global-exercise-list';
+import type { builtProgram } from '$lib/interfaces/builtProgram';
+import type { GlobalExerciselist } from '$lib/interfaces/global-exercise-list';
 import type { ProgramDay } from '$lib/interfaces/programDay';
-import type {muscleGroupTypes } from '../interfaces/exercise'
-
+import type { muscleGroupTypes } from '../interfaces/exercise';
 
 import { writable } from 'svelte/store';
 // exercisesList[x].name -> to access the exercise name
@@ -22,10 +21,7 @@ export const exerciseHistory = writable([
 		]
 	}
 ]);
-/**
- * TODO:Timon do this pls
- * change ths to the GlobalExerciseList interface and fix the +page.svelte of routes/session
- */
+
 export const Exerciseslist = writable<GlobalExerciselist>({
 	exercises: [
 		{
@@ -143,20 +139,22 @@ export const personalProgram = writable<ProgramDay>({
 });
 
 //fixed builtPrograms
-export const builtPrograms = writable<Array<BuiltPrograms>>([
+export const builtPrograms = writable<Array<builtProgram>>([
+	// this obj is 1 selectedTobuild
 	{
-		name: 'Fre-Dag',
+		name: 'Nsuns1',
 		days: [
 			{
 				dayNumber: 1,
+				label: 'Chest Hypertrophy',
 				exercises: [
 					{
 						exercise: {
 							id: 1,
-							name: 'ok',
-							exerciseGif: 'exerciseGifString',
-							explanation: 'explanationString',
-							muscleGroups: new Set(['chest']),
+							name: 'Barbell Bench Press',
+							exerciseGif: 'benchGifString',
+							explanation: 'Classic chest compound exercise.',
+							muscleGroups: new Set(['chest', 'triceps', 'front delts']),
 							exerciseHistoryId: 1,
 							exerciseHistory: {
 								exerciseId: 1,
@@ -172,27 +170,138 @@ export const builtPrograms = writable<Array<BuiltPrograms>>([
 										strapsUsed: false,
 										sleevesUsed: true,
 										rpe: 8,
-										extraNote: 'Note'
+										extraNote: 'Felt solid, good control'
 									}
 								]
 							}
 						},
-						sets: []
+						sets: [
+							{ setNumber: 1, reps: 12 },
+							{ setNumber: 2, reps: 10 },
+							{ setNumber: 3, reps: 8 },
+							{ setNumber: 4, reps: 6 }
+						]
+					},
+					{
+						exercise: {
+							id: 2,
+							name: 'Incline Dumbbell Press',
+							exerciseGif: 'inclineDumbbellGif',
+							explanation: 'Targets upper chest with more stretch.',
+							muscleGroups: new Set(['upper chest', 'front delts']),
+							exerciseHistoryId: 2,
+							exerciseHistory: {
+								exerciseId: 2,
+								date: new Date(),
+								sets: [
+									{
+										id: 1,
+										exerciseHistoryId: 2,
+										setNumber: 1,
+										weight: 30,
+										reps: 10,
+										wrapsUsed: false,
+										strapsUsed: false,
+										sleevesUsed: false,
+										rpe: 7,
+										extraNote: 'Could go heavier'
+									}
+								]
+							}
+						},
+						sets: [
+							{ setNumber: 1, reps: 10 },
+							{ setNumber: 2, reps: 10 },
+							{ setNumber: 3, reps: 8 }
+						]
+					}
+				]
+			},
+			{
+				dayNumber: 2,
+				label: 'Back Strength',
+				exercises: [
+					{
+						exercise: {
+							id: 3,
+							name: 'Seated Cable Row',
+							exerciseGif: 'seatedRowGifString',
+							explanation: 'Mid-back thickness builder.',
+							muscleGroups: new Set(['lats', 'rhomboids', 'biceps']),
+							exerciseHistoryId: 3,
+							exerciseHistory: {
+								exerciseId: 3,
+								date: new Date(),
+								sets: [
+									{
+										id: 1,
+										exerciseHistoryId: 3,
+										setNumber: 1,
+										weight: 60,
+										reps: 12,
+										wrapsUsed: false,
+										strapsUsed: true,
+										sleevesUsed: false,
+										rpe: 8,
+										extraNote: 'Back felt pumped'
+									}
+								]
+							}
+						},
+						sets: [
+							{ setNumber: 1, reps: 12 },
+							{ setNumber: 2, reps: 10 },
+							{ setNumber: 3, reps: 8 }
+						]
+					},
+					{
+						exercise: {
+							id: 4,
+							name: 'Lat Pulldown',
+							exerciseGif: 'latPulldownGif',
+							explanation: 'Vertical pulling motion for lats.',
+							muscleGroups: new Set(['lats', 'biceps']),
+							exerciseHistoryId: 4,
+							exerciseHistory: {
+								exerciseId: 4,
+								date: new Date(),
+								sets: [
+									{
+										id: 1,
+										exerciseHistoryId: 4,
+										setNumber: 1,
+										weight: 50,
+										reps: 10,
+										wrapsUsed: false,
+										strapsUsed: false,
+										sleevesUsed: false,
+										rpe: 7,
+										extraNote: ''
+									}
+								]
+							}
+						},
+						sets: [
+							{ setNumber: 1, reps: 10 },
+							{ setNumber: 2, reps: 10 },
+							{ setNumber: 3, reps: 10 }
+						]
 					}
 				]
 			}
 		]
 	},
 	{
-		name: 'Timon-Dag',
+		name: 'Nsuns-2-program',
 		days: [
 			{
 				dayNumber: 1,
+				label:'Back day Strength',
 				exercises: [
 					{
 						exercise: {
-							id: 1,
-							name: 'ok',
+							id: 2021,
+							name: 'Deadlift',
 							exerciseGif: 'exerciseGifString',
 							explanation: 'explanationString',
 							muscleGroups: new Set(['chest']),
@@ -216,7 +325,12 @@ export const builtPrograms = writable<Array<BuiltPrograms>>([
 								]
 							}
 						},
-						sets: []
+						sets: [
+							{ setNumber: 1, reps: 12 },
+							{ setNumber: 2, reps: 10 },
+							{ setNumber: 3, reps: 8 },
+							{ setNumber: 4, reps: 6 }
+						]
 					}
 				]
 			}
