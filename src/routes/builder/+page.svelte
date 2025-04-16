@@ -1,6 +1,7 @@
 <script lang='ts'>
-import type {builtProgram} from '../../lib/interfaces/builtProgram'
-import type {ProgramDay } from '../../lib/interfaces/programDay'
+
+  import type {builtProgram} from '../../lib/interfaces/builtProgram'
+  import type {ProgramDay } from '../../lib/interfaces/programDay'
   import { onMount } from 'svelte';
   import Dialog from '../../lib/components/dialog.svelte';
   import CollapsibleSection from '$lib/components/CollapsibleSection.svelte';
@@ -11,7 +12,7 @@ import type {ProgramDay } from '../../lib/interfaces/programDay'
   let days:Record<string, ProgramDay>
   let dialog:any;
   let selectedToBuildName = '';
-let selectedToBuild: builtProgram | null = null;
+  let selectedToBuild: builtProgram | null = null;
 
 $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName) || null;
 
@@ -72,7 +73,7 @@ function addSet(dayIndex, exerciseIndex) {
   });
 }
 
-  setBuildTemp();
+setBuildTemp();
 </script>
 
 <!-- title -->

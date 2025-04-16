@@ -42,7 +42,7 @@
       </div>
     </a>
 
-    <a href="/diavoorstellingxd">
+    <a href="/exerciseList">
       <div class="flex justify-center items-center border-2 h-9 w-9 rounded-xl hover:scale-110 transition-transform duration-300" class:bg-blue-300 ={page.url.pathname === '/diavoorstellingxd'}>
         <img src={graph1} alt="Graph">
         <span class="absolute bottom-[-3px] text-md font-medium text-center"></span>
