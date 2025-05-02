@@ -4,6 +4,7 @@
   import {muscleGroups} from '../../lib/interfaces/exercise'
   import loop from '../../lib/svg/loop.svg';
   import { goto } from '$app/navigation';
+  
 
 
 
@@ -78,7 +79,7 @@
           {#if exercise.exerciseGif}
             <img
               class="h-24 mt-3 rounded object-cover"
-              src={"data:image/gif;base64," + exercise.exerciseGif}
+              src={exercise.exerciseGif}
               alt={exercise.name}
             />
           {/if}

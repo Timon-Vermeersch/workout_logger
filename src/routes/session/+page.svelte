@@ -152,8 +152,8 @@
     </div>
 
     <div class="flex justify-end space-x-3 mt-6">
-      <button class="p-3 bg-red-500 rounded text-white" on:click={() => dialog.close()}>Cancel</button>
-      <button class="p-3 bg-green-500 rounded text-white" on:click={confirmSwap} disabled={selectedSwapExercise === null}>Confirm</button>
+      <button class="p-3 bg-red-500 rounded text-white" on:click={() => {dialog.close(); selectedSwapExercise = null ; console.log("cancelled", selectedSwapExercise);}}>Cancel</button>
+      <button class="p-3 bg-green-500 rounded text-white disabled:bg-gray-400" on:click={confirmSwap} disabled={selectedSwapExercise === null}>Confirm</button>
     </div>
   </div>
 </Dialog>

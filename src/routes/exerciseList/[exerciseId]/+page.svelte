@@ -52,7 +52,7 @@
       {#if selectedExercise?.exerciseGif}
         <div class="flex justify-center">
           <img
-            src={"data:image/gif;base64," + selectedExercise.exerciseGif}
+            src={selectedExercise.exerciseGif}
             alt={selectedExercise.name}
             class="rounded-xl shadow-lg max-w-full h-auto border border-gray-600"
           />
