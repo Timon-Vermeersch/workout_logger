@@ -9,15 +9,19 @@
   import less from '../../lib/svg/less.svg';
   import { builtPrograms } from '../../lib/stores/data_store';
   import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
+	import type { Exercise } from '$lib/interfaces/exercise';
 
   
   let selectedExerciseIndex:number|null = null;
-  let selectedAddExercise:Exer|null = null;
+  let selectedAddExercise:Exercise|null = null;
 
   let days:Record<string, ProgramDay>
-  let dialog:any;
-  let selectedToBuildName = '';
+  let dialog:Dialog;
+  let dialogAddExercise:Dialog;
+  let selectedToBuildName:string = '';
   let selectedToBuild: builtProgram | null = null;
+  let enterName:string = '';
+  let enterDayName:string = '';
 
 $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName) || null;
 
@@ -27,7 +31,7 @@ $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToB
  */
 function addExercise(dayIndex:number) {
     selectedExerciseIndex = dayIndex;
-    dialog.showModal();
+    dialogAddExercise.showModal();
   }
 
 function confirmAdd():void {
@@ -40,7 +44,6 @@ function confirmAdd():void {
         return [] 
       }
       const selectedProgramDay:ProgramDay = selectedProgram?.days[selectedExerciseIndex]
-      console.log('desze', selectedAddExercise)
       const convertedSelectedExercise:PlannedExercise = {
         exercise : selectedAddExercise, 
         date: '',
@@ -50,13 +53,11 @@ function confirmAdd():void {
       console.log(updated)
       return updated
     })
-    dialog.close();
+    dialogAddExercise.close();
     selectedExerciseIndex = null;
     selectedAddExercise = null;
   }
 }
-
-
 
   onMount(() => {
     selectedToBuildName = $builtPrograms[0]?.name || '';
@@ -117,7 +118,28 @@ function confirmAdd():void {
   });
 }
 
+function handleAddProgram() {
+  if (enterName != ''){
+    const newProgram: builtProgram = {
+    name: enterName,
+    days: []};
 
+    builtPrograms.update((programs:Array<builtProgram>) => [...programs , newProgram])
+    dialog.close()
+    enterName = ''
+  }
+}
+
+// function checkDayNumber(givenBuiltProgram){
+
+// }
+// function addDay(){
+// checkDayNumber()
+// const newDay = {
+//   dayNumber: 
+//   label: nameOf
+// }
+// }
 
 setBuildTemp();
 console.log(selectedToBuild)
@@ -144,7 +166,7 @@ console.log(selectedToBuild)
               <div>
                 {#each selectedToBuild.days as day, dayIndex}
                 <CollapsibleSection headerText={`${day.dayNumber}. ${day.label}`}>
-                  {dayIndex}
+
                     <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
                         {#each day.exercises as { exercise, sets }, exerciseIndex}
                         <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
@@ -187,6 +209,11 @@ console.log(selectedToBuild)
                   </CollapsibleSection>
                   
                   {/each}
+                  <span class='flex justify-center' >
+                    <button on:click={addDay} class= ''>
+                      <img  class= 'w-6 h-6 invert'src="{more}" alt="">
+                    </button>
+                  </span>
               </div>
           {:else}
               Please select a program at the top!
@@ -195,12 +222,28 @@ console.log(selectedToBuild)
   </div>
 </div> 
 
-<Dialog bind:dialog on:close={() => console.log('closed')}>
-         <img src="https://open.lib.umn.edu/app/uploads/sites/208/2019/02/uterus-left-300x208.png" alt="">
-         press escape to close
+<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
+  <div class="p-6 bg-gray-800 text-white w-lg ">
+    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
+    <form on:submit|preventDefault={handleAddProgram} class="flex flex-col space-y-4">
+      <input
+        id="programName"
+        class="border   p-2 bg-gray-700 text-white   focus:ring-purple-500"
+        bind:value={enterName}
+        type="text"
+        placeholder="Enter program name"
+      />
+      <button
+        class="bg-purple-600 hover:bg-purple-500 text-white font-semibold p-2 rounded transition"
+        type="submit"
+      >
+        Add Program
+      </button>
+    </form>
+  </div>
 </Dialog>
 
-<Dialog bind:dialog>
+<Dialog bind:dialog={dialogAddExercise}>
   <div class="p-6 bg-gray-800 text-white w-96 max-w-full ">
     <h2 class="text-xl font-bold mb-4">Choose your Pokemon</h2>
 
@@ -216,7 +259,7 @@ console.log(selectedToBuild)
     </div>
 
     <div class="flex justify-end space-x-3 mt-6">
-      <button class="p-3 bg-red-500 rounded text-white" on:click={() => {dialog.close(); selectedAddExercise = null ;}}>Cancel</button>
+      <button class="p-3 bg-red-500 rounded text-white" on:click={() => {dialogAddExercise.close(); selectedAddExercise = null ;}}>Cancel</button>
       <button class="p-3 bg-green-500 rounded text-white disabled:bg-gray-400" on:click={() => {confirmAdd()}} disabled={selectedAddExercise === null}>Confirm</button>
     </div>
   </div>
