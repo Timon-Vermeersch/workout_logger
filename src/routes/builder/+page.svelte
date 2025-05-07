@@ -6,6 +6,7 @@
   import type {ProgramDay } from '../../lib/interfaces/programDay'
   import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
 	import type { Exercise } from '$lib/interfaces/exercise';
+  import type {SwipeDetail} from '../../lib/interfaces/swipeDetail'
   import { onMount } from 'svelte';
 
   import Dialog from '../../lib/components/dialog.svelte';
@@ -20,22 +21,54 @@
   let days:Record<string, ProgramDay>
   let dialog:Dialog;
   let dialogAddExercise:Dialog;
+  let dialogChangeDayLabel:Dialog
   let selectedToBuildName:string = '';
   let selectedToBuild: builtProgram | null = null;
   let enterName:string = '';
   let enterDayName:string = '';
+  let newLabelInput = '';
+  let activeIndex:number;
+
 
 $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName) || null;
 
 import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
-let direction;
+let direction:string | null;
 let target;
 let pointerType;
 
-function handler(event: SwipeCustomEvent) {
+function changeDayLabel(index:number, newLabel:string){
+  if(!selectedToBuild){return};
+  const programCopy:builtProgram = {...selectedToBuild}
+  programCopy.days[index].label = newLabel
+  selectedToBuild = programCopy
+  console.log('testChangeDay')
+}
+function deleteDay(index) {
+  console.log(selectedToBuild)
+  if(!selectedToBuild){return}
+  const programCopy:builtProgram = {...selectedToBuild}
+  programCopy.days?.splice(index , 1)
+  selectedToBuild = {...programCopy} 
+}
+function handler(event:SwipeCustomEvent, index:number) {
+  console.log(index)
   direction = event.detail.direction;
   target = event.detail.target;
   pointerType = event.detail.pointerType;
+
+  // const {direction} = event.detail also possible
+
+  if(direction === 'right'){
+    newLabelInput = '';
+    activeIndex = index
+    dialogChangeDayLabel.showModal()
+    // changeDayLabel(index, 'hgesf')
+  }
+  if(direction === 'left'){
+    deleteDay(index)
+
+  }
 }
 /**
  * this function sets the selected exerciseIndex before opening dialog, and opens dialog
@@ -150,7 +183,7 @@ const newDay = {
   label:'NewDay added',
   exercises: []
 }
-const programCopy = {...selectedToBuild}
+const programCopy:builtProgram = {...selectedToBuild!}
 programCopy.days?.push(newDay)
 console.log(programCopy)
 selectedToBuild = {...programCopy}
@@ -182,7 +215,7 @@ console.log(selectedToBuild)
               <div>
                 {#each selectedToBuild.days as day, dayIndex}
                 <div use:swipe={()=>({ timeframe: 300, minSwipeDistance: 60 })} 
-                  on:swipe={handler}> {direction}
+                  on:swipe={(event:SwipeCustomEvent) => handler(event, dayIndex)}>
                   <CollapsibleSection headerText={`${day.dayNumber}. ${day.label}`}>
                       <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
                           {#each day.exercises as { exercise, sets }, exerciseIndex}
@@ -238,28 +271,55 @@ console.log(selectedToBuild)
           {/if}
       </div>
   </div>
+  {direction}
 </div> 
 
-<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
-  <div class="p-6 bg-gray-800 text-white w-lg ">
-    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
-    <form on:submit|preventDefault={handleAddProgram} class="flex flex-col space-y-4">
+<Dialog bind:dialog={dialogChangeDayLabel}>
+  <form method="dialog" on:submit|preventDefault={() => {
+    changeDayLabel(index, newLabelInput);
+    dialogChangeDayLabel.close();
+  }}>
+    <input bind:value={newLabelInput} placeholder="Enter new label" />
+    <button type="submit">OK</button>
+    <button type="button" on:click={() => dialogChangeDayLabel.close()}>Cancel</button>
+  </form>
+
+</Dialog>
+
+
+<Dialog bind:dialog={dialogChangeDayLabel}>
+  <div class="p-6 bg-gray-800 text-white w-80">
+    <h2 class="text-xl font-bold mb-4 text-center">Change Day Label</h2>
+    <form
+      class="flex flex-col space-y-4"
+      on:submit|preventDefault={() => {
+        changeDayLabel(activeIndex, newLabelInput);
+        dialogChangeDayLabel.close();
+      }}
+    >
       <input
-        id="programName"
-        class="border   p-2 bg-gray-700 text-white   focus:ring-purple-500"
-        bind:value={enterName}
+        class="border p-2 bg-gray-700 text-white focus:ring-purple-500"
+        bind:value={newLabelInput}
         type="text"
-        placeholder="Enter program name"
+        placeholder="Enter new label"
       />
       <button
         class="bg-purple-600 hover:bg-purple-500 text-white font-semibold p-2 rounded transition"
         type="submit"
       >
-        Add Program
+        Confirm
+      </button>
+      <button
+        type="button"
+        class="text-sm text-gray-400 hover:text-white"
+        on:click={() => dialogChangeDayLabel.close()}
+      >
+        Cancel
       </button>
     </form>
   </div>
 </Dialog>
+
 
 <Dialog bind:dialog={dialogAddExercise}>
   <div class="p-6 bg-gray-800 text-white w-96 max-w-full ">
