@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import PageHeader from '../lib/structure/pageheader.svelte';
+	import { Toaster } from 'svelte-5-french-toast';
   
 	let { children } = $props();
 	let { isMobile, type, ready } = $state({
@@ -29,6 +30,7 @@
 
 
   <!-- Ready ? loadMobile : Loaddesktop -->
+  <Toaster />
   {#if !ready}
 	<div class="flex items-center justify-center min-h-screen">
 	  <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-gray-500"></div>

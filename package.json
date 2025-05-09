@@ -44,6 +44,7 @@
 		"@oslojs/crypto": "^1.0.1",
 		"@oslojs/encoding": "^1.1.0",
 		"drizzle-orm": "^0.38.4",
+		"svelte-5-french-toast": "^2.0.4",
 		"svelte-gestures": "^5.1.4"
 	}
 }

@@ -1,6 +1,7 @@
 <script lang='ts'>
   import { Exerciseslist } from '../../lib/stores/data_store';
   import { builtPrograms } from '../../lib/stores/data_store';
+  import { toast } from 'svelte-5-french-toast';
 
   import type {builtProgram} from '../../lib/interfaces/builtProgram'
   import type {ProgramDay } from '../../lib/interfaces/programDay'
@@ -22,6 +23,7 @@
   let dialog:Dialog;
   let dialogAddExercise:Dialog;
   let dialogChangeDayLabel:Dialog
+  let dialogDeleteProgramDayConfirmation:Dialog
   let selectedToBuildName:string = '';
   let selectedToBuild: builtProgram | null = null;
   let enterName:string = '';
@@ -33,6 +35,7 @@
 $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName) || null;
 
 import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
+
 let direction:string | null;
 let target;
 let pointerType;
@@ -56,18 +59,17 @@ function handler(event:SwipeCustomEvent, index:number) {
   direction = event.detail.direction;
   target = event.detail.target;
   pointerType = event.detail.pointerType;
-
   // const {direction} = event.detail also possible
-
   if(direction === 'right'){
     newLabelInput = '';
     activeIndex = index
     dialogChangeDayLabel.showModal()
-    // changeDayLabel(index, 'hgesf')
+    
   }
   if(direction === 'left'){
-    deleteDay(index)
-
+    console.log(selectedToBuild?.days[index].label)
+    activeIndex = index
+    dialogDeleteProgramDayConfirmation.showModal()
   }
 }
 /**
@@ -187,6 +189,11 @@ const programCopy:builtProgram = {...selectedToBuild!}
 programCopy.days?.push(newDay)
 console.log(programCopy)
 selectedToBuild = {...programCopy}
+
+setTimeout(() => {
+  const lastDay = document.querySelector(`[data-day-index="${daysInProgram}"]`);
+  lastDay?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}, 0);
 }
 
 
@@ -213,9 +220,13 @@ console.log(selectedToBuild)
       <div>
           {#if selectedToBuild}
               <div>
+                {#if selectedToBuild.days.length === 0}
+                    <div class="text-center text-gray-400 my-4">Click the plus to add a day</div>
+                {/if} 
                 {#each selectedToBuild.days as day, dayIndex}
                 <div use:swipe={()=>({ timeframe: 300, minSwipeDistance: 60 })} 
-                  on:swipe={(event:SwipeCustomEvent) => handler(event, dayIndex)}>
+                  on:swipe={(event:SwipeCustomEvent) => handler(event, dayIndex)}
+                  data-day-index={dayIndex}>
                   <CollapsibleSection headerText={`${day.dayNumber}. ${day.label}`}>
                       <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
                           {#each day.exercises as { exercise, sets }, exerciseIndex}
@@ -261,7 +272,7 @@ console.log(selectedToBuild)
                   
                   {/each}
                   <span class='flex justify-center' >
-                    <button class='m-4' on:click={AddDay} >
+                    <button class='m-4' on:click={()=> {AddDay(); toast.success('Day Added!')}} >
                       <img  class= 'w-6 h-6 invert'src="{more}" alt="">
                     </button>
                   </span>
@@ -271,20 +282,10 @@ console.log(selectedToBuild)
           {/if}
       </div>
   </div>
-  {direction}
+  <!-- {direction} -->
 </div> 
 
-<Dialog bind:dialog={dialogChangeDayLabel}>
-  <form method="dialog" on:submit|preventDefault={() => {
-    changeDayLabel(index, newLabelInput);
-    dialogChangeDayLabel.close();
-  }}>
-    <input bind:value={newLabelInput} placeholder="Enter new label" />
-    <button type="submit">OK</button>
-    <button type="button" on:click={() => dialogChangeDayLabel.close()}>Cancel</button>
-  </form>
 
-</Dialog>
 
 
 <Dialog bind:dialog={dialogChangeDayLabel}>
@@ -340,5 +341,71 @@ console.log(selectedToBuild)
       <button class="p-3 bg-red-500 rounded text-white" on:click={() => {dialogAddExercise.close(); selectedAddExercise = null ;}}>Cancel</button>
       <button class="p-3 bg-green-500 rounded text-white disabled:bg-gray-400" on:click={() => {confirmAdd()}} disabled={selectedAddExercise === null}>Confirm</button>
     </div>
+  </div>
+</Dialog>
+
+<Dialog bind:dialog={dialogDeleteProgramDayConfirmation}>
+  <div class="p-6 bg-gray-800 text-white w-80">
+    <h2 class="text-xl font-bold mb-4 text-center">Confirm Deletion</h2>
+    <p class="text-center text-gray-300 font-semibold text-white">
+      Are you sure you want to delete
+      <span class="italic mx-1">
+        {selectedToBuild?.days[activeIndex]?.label || 'this day'}
+      </span>
+      ?
+    </p>
+      <form
+        on:submit|preventDefault={() => {
+          deleteDay(activeIndex);
+          toast.success('Day deleted');
+          dialogDeleteProgramDayConfirmation.close();
+        }}
+        method="dialog"
+        class="flex flex-col space-y-4 mt-4"
+      >
+      <button
+        type="submit"
+        class="bg-red-600 hover:bg-red-500 text-white font-semibold p-2 rounded transition"
+      >
+        Delete
+      </button>
+      <button
+        type="button"
+        class="text-sm text-gray-400 hover:text-white"
+        on:click={() => dialogDeleteProgramDayConfirmation.close()}
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+</Dialog>
+
+<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
+  <div class="p-6 bg-gray-800 text-white w-80">
+    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
+    <form
+      on:submit|preventDefault={handleAddProgram}
+      class="flex flex-col space-y-4"
+    >
+      <input
+        bind:value={enterName}
+        type="text"
+        placeholder="Program name"
+        class="border p-2 bg-gray-700 text-white focus:ring-blue-500"
+      />
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-500 text-white font-semibold p-2 rounded transition"
+      >
+        Add New Program
+      </button>
+      <button
+        type="button"
+        class="text-sm text-gray-400 hover:text-white"
+        on:click={() => dialog.close()}
+      >
+        Cancel
+      </button>
+    </form>
   </div>
 </Dialog>
