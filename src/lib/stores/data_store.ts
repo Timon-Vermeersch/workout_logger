@@ -1,7 +1,8 @@
 import type { builtProgram } from '$lib/interfaces/builtProgram';
 import type { GlobalExerciselist } from '$lib/interfaces/global-exercise-list';
 import type { ProgramDay } from '$lib/interfaces/programDay';
-import type { Equipment, muscleGroupTypes } from '../interfaces/exercise';
+import type { equipment, muscleGroupTypes } from '../interfaces/exercise';
+import type { ActiveProgramRef } from '$lib/interfaces/ActiveProgramRef';
 
 
 
@@ -338,3 +339,10 @@ export const builtPrograms = writable<Array<builtProgram>>([
 		]
 	}
 ]);
+
+
+export const CurrentActiveBuiltProgram = writable<ActiveProgramRef>({
+	name:'Nsuns1',
+	currentDay: 1,
+	daysAmount : 2
+})

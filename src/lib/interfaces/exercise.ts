@@ -12,7 +12,7 @@ export interface Exercise {
 
 // export type muscleGroupTypes = 'chest' | 'triceps' | 'back' | 'biceps';
 
-export const muscleGroups = ['chest', 'triceps', 'back', 'biceps'] as const
+export const muscleGroups = ['chest', 'triceps', 'back', 'biceps', 'front delts', 'lats'] as const
 export const equipment = [
 	// Free weights
 	'dumbbells', 'barbell', 'kettlebell', 'ez curl bar', 'trap bar',

@@ -2,13 +2,59 @@
   import Stopwatch from '../../lib/components/stopwatch.svelte';
   import more from '../../lib/svg/more.svg';
   import less from '../../lib/svg/less.svg';
+  import next from '../../lib/svg/next.svg'
   import Dialog from '../../lib/components/dialog.svelte';
-  import { personalProgram, Exerciseslist } from '../../lib/stores/data_store';
+  import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms} from '../../lib/stores/data_store';
 	import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
-
+	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
+  
+  
+  
+  
   let dialog:Dialog;
   let selectedExerciseIndex:number|null = null;
   let selectedSwapExercise:PlannedExercise|null = null;
+  let currentActiveBuiltProgramName:string|null
+  let currentActiveBuiltProgramDayNumber:number|null
+  let currentDayLabel:string | undefined;
+
+//   onMount(async () => {
+// 	currentActiveBuiltProgramName = $CurrentActiveBuiltProgram.name;
+// 	currentActiveBuiltProgramDayNumber = $CurrentActiveBuiltProgram.currentDay;
+
+// 	const allPrograms = $builtPrograms;
+// 	const selectedProgram = allPrograms.find(p => p.name === currentActiveBuiltProgramName);
+// 	if (!selectedProgram) return;
+
+// 	const day = selectedProgram.days.find(d => d.dayNumber === currentActiveBuiltProgramDayNumber);
+// 	if (!day) return;
+  
+//   currentDayLabel = day.label
+// 	personalProgram.set({ ...day });
+// });
+onMount(() => {
+	setupDay();
+});
+
+function setupDay() {
+	currentActiveBuiltProgramName = $CurrentActiveBuiltProgram.name;
+	currentActiveBuiltProgramDayNumber = $CurrentActiveBuiltProgram.currentDay;
+
+	const allPrograms = $builtPrograms;
+	const selectedProgram = allPrograms.find(p => p.name === currentActiveBuiltProgramName);
+	if (!selectedProgram) return;
+
+	const day = selectedProgram.days.find(d => d.dayNumber === currentActiveBuiltProgramDayNumber);
+	if (!day) return;
+
+	currentDayLabel = day.label;
+	personalProgram.set({ ...day });
+}
+
+  function knop(){
+    console.log(currentActiveBuiltProgramName)
+  }
 
   function swapExercise(plannedExerciseIndex:number) {
     selectedExerciseIndex = plannedExerciseIndex;
@@ -58,21 +104,32 @@
       return copyProgram;
     });
   }
+  function goToNextDay() {
+  CurrentActiveBuiltProgram.update(program => {
+    const nextDay = program.currentDay + 1;
+    const wrappedDay = nextDay > program.daysAmount ? 1 : nextDay;
+    return { ...program, currentDay: wrappedDay };
+  });
+
+  setupDay(); 
+}
+
 </script>
 
 <div class="bg-gray-700">
   <div class="p-4 bg-gray-700">
-    <div class="text-center text-gray-200 font-bold mb-4">
-      <div class="bg-gray-800 text-white p-4 rounded overflow-visible">{formattedDate}</div>
+    <div class="bg-gray-800 text-white p-4 rounded grid [grid-template-columns:35%_30%_35%] items-center">
+      <div class='text-center'>Current: {currentActiveBuiltProgramName}</div>
+      <button class="font-bold text-center">{currentDayLabel}</button>
+      <div class="text-center">{formattedDate}</div>
     </div>
 
     <Stopwatch />
 
 
 
-      <!-- personalProgram[x].sets[y].set.set -> to access the current set reps -->
-      <!-- personalProgram[x].sets[y].set.rep -> to access the current set weight -->
-    <div class="bg flex flex-col flex-auto space-y-4">
+<!-- start -->
+    <div class="bg min-h-dvh flex flex-col flex-auto space-y-4">
       {#each $personalProgram.exercises as plannedExercise, index}
         <div class="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
           <div class="grid grid-cols-2 mb-2">
@@ -131,7 +188,25 @@
           </div>
         </div>
       {/each}
+      
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions --><div
+      on:click={goToNextDay}
+      class="bg-gray-800 p-4 rounded-lg shadow border border-gray-700 hover:bg-gray-700 cursor-pointer transition active:scale-95"
+    >
+      <div class="grid grid-cols-2 mb-2">
+        <h2 class="Title flex flex-col flex-wrap font-semibold text-white">
+          ➕ Next Day
+          <div class="text-xs text-gray-400 mb-1">Go to the next workout day</div>
+        </h2>
+        <div class="flex justify-end items-center">
+          <img src={next} alt="Next Day" class="w-6 h-6 filter invert brightness-0" />
+        </div>
+      </div>
     </div>
+    </div>
+    
+      
   </div>
 </div>
 <!-- TODO: timon fix this -->
