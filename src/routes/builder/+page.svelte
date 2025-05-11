@@ -1,14 +1,15 @@
 <script lang='ts'>
   import { Exerciseslist } from '../../lib/stores/data_store';
   import { builtPrograms } from '../../lib/stores/data_store';
+  import { CurrentActiveBuiltProgram } from '../../lib/stores/data_store';
   import { toast } from 'svelte-5-french-toast';
+  import { onMount } from 'svelte';
 
   import type {builtProgram} from '../../lib/interfaces/builtProgram'
   import type {ProgramDay } from '../../lib/interfaces/programDay'
   import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
 	import type { Exercise } from '$lib/interfaces/exercise';
   import type {SwipeDetail} from '../../lib/interfaces/swipeDetail'
-  import { onMount } from 'svelte';
 
   import Dialog from '../../lib/components/dialog.svelte';
   import CollapsibleSection from '$lib/components/CollapsibleSection.svelte';
@@ -41,7 +42,7 @@ let target;
 let pointerType;
 
 function changeDayLabel(index:number, newLabel:string){
-  if(!selectedToBuild){return};
+  if(!selectedToBuild || !newLabel) {toast.error('enter a label');  dialogChangeDayLabel.close(); return};
   const programCopy:builtProgram = {...selectedToBuild}
   programCopy.days[index].label = newLabel
   selectedToBuild = programCopy
@@ -173,6 +174,7 @@ function handleAddProgram() {
 
     builtPrograms.update((programs:Array<builtProgram>) => [...programs , newProgram])
     dialog.close()
+    toast.success(enterName + ' added')
     enterName = ''
   }
 }
@@ -182,7 +184,7 @@ function AddDay(){
 console.log(daysInProgram)
 const newDay = {
   dayNumber : daysInProgram + 1,
-  label:'NewDay added',
+  label:'Swipe Right To Change Name, Left To Delete',
   exercises: []
 }
 const programCopy:builtProgram = {...selectedToBuild!}
@@ -190,29 +192,38 @@ programCopy.days?.push(newDay)
 console.log(programCopy)
 selectedToBuild = {...programCopy}
 
-setTimeout(() => {
-  const lastDay = document.querySelector(`[data-day-index="${daysInProgram}"]`);
-  lastDay?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}, 0);
+// setTimeout(() => {
+//   const lastDay = document.querySelector(`[data-day-index="${daysInProgram}"]`);
+//   lastDay?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// }, 0);
 }
 
-
+function setActiveProgram(selectedToBuild:builtProgram){
+  $CurrentActiveBuiltProgram.currentDay = 1
+  $CurrentActiveBuiltProgram.name = selectedToBuild.name
+  $CurrentActiveBuiltProgram.daysAmount =  selectedToBuild.days.length
+  toast.success(`Set Current Program To ${selectedToBuild.name}`);
+}
 
 setBuildTemp();
-console.log(selectedToBuild)
+// console.log(selectedToBuild)
 </script>
 
 <!-- title -->
 <div class='div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
-  <div class='flex justify-center'>Buildrrr!</div>
+  <div class='flex justify-center hover:bg-gray-700 rounded-4xl'>
+      <button on:click={setActiveProgram(selectedToBuild)}>
+        Set as Current!
+      </button>
+  </div>
 
-  <select bind:value={selectedToBuildName} on:change={setBuild} class="flex justify-center items-center bg-gray-800 text-white text-center">
+  <select bind:value={selectedToBuildName} on:change={setBuild} class="flex hover:bg-gray-700 rounded-4xl justify-center items-center bg-gray-800 text-white text-center">
       {#each $builtPrograms as availableProgram}
           <option value="{availableProgram.name}">{availableProgram.name}</option>
       {/each}
   </select>
 
-  <button class='flex justify-center' on:click={() => dialog.showModal()}>Plus(+)</button>
+  <button class='flex justify-center hover:bg-gray-700 rounded-4xl' on:click={() => dialog.showModal()}>Plus(+)</button>
 </div>
 
 <div class="BODY min-h-[calc(100vh-56px)] text-black bg-gray-700">

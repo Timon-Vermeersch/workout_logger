@@ -337,7 +337,100 @@ export const builtPrograms = writable<Array<builtProgram>>([
 				]
 			}
 		]
-	}
+	},
+	{
+		name: 'Push-Pull-Legs Vol.1',
+		days: [
+			{
+				dayNumber: 1,
+				label: 'Push Day',
+				exercises: [
+					{
+						exercise: {
+							id: 10,
+							name: 'Overhead Press',
+							exerciseGif: 'ohpGif',
+							explanation: 'Builds shoulder and triceps strength.',
+							muscleGroups: new Set(['shoulders', 'triceps']),
+							exerciseHistoryId: 10,
+							exerciseHistory: {
+								exerciseId: 10,
+								date: new Date(),
+								sets: [
+									{ id: 1, exerciseHistoryId: 10, setNumber: 1, weight: 40, reps: 8, wrapsUsed: false, strapsUsed: false, sleevesUsed: false, rpe: 8, extraNote: '' }
+								]
+							}
+						},
+						sets: [
+							{ setNumber: 1, reps: 8 },
+							{ setNumber: 2, reps: 6 },
+							{ setNumber: 3, reps: 6 }
+						]
+					}
+				]
+			},
+			{
+				dayNumber: 2,
+				label: 'Pull Day',
+				exercises: [
+					{
+						exercise: {
+							id: 11,
+							name: 'Barbell Row',
+							exerciseGif: 'rowGif',
+							explanation: 'Compound lift for back thickness.',
+							muscleGroups: new Set(['lats', 'rear delts', 'biceps']),
+							exerciseHistoryId: 11,
+							exerciseHistory: {
+								exerciseId: 11,
+								date: new Date(),
+								sets: [
+									{ id: 1, exerciseHistoryId: 11, setNumber: 1, weight: 70, reps: 10, wrapsUsed: false, strapsUsed: true, sleevesUsed: false, rpe: 7, extraNote: 'Grip slipped on 3rd set' }
+								]
+							}
+						},
+						sets: [
+							{ setNumber: 1, reps: 10 },
+							{ setNumber: 2, reps: 8 },
+							{ setNumber: 3, reps: 8 }
+						]
+					}
+				]
+			},
+			{
+				dayNumber: 3,
+				label: 'Leg Day',
+				exercises: [
+					{
+						exercise: {
+							id: 12,
+							name: 'Barbell Squat',
+							exerciseGif: 'squatGif',
+							explanation: 'Full body compound; focus on quads and glutes.',
+							muscleGroups: new Set(['quads', 'glutes', 'core']),
+							exerciseHistoryId: 12,
+							exerciseHistory: {
+								exerciseId: 12,
+								date: new Date(),
+								sets: [
+									{ id: 1, exerciseHistoryId: 12, setNumber: 1, weight: 100, reps: 5, wrapsUsed: true, strapsUsed: false, sleevesUsed: true, rpe: 9, extraNote: 'Heavy but clean form' }
+								]
+							}
+						},
+						sets: [
+							{ setNumber: 1, reps: 5 },
+							{ setNumber: 2, reps: 5 },
+							{ setNumber: 3, reps: 5 }
+						]
+					}
+				]
+			}
+		]
+	},
+
+
+	
+	
 ]);
 
 
