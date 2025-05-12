@@ -16,7 +16,7 @@
   import more from '../../lib/svg/more.svg';
   import less from '../../lib/svg/less.svg';
   import edit from '../../lib/svg/edit.svg';
-
+  import cancel from '../../lib/svg/cancel.svg'
   let selectedExerciseIndex:number|null = null;
   let selectedAddExercise:Exercise|null = null;
 
@@ -25,12 +25,15 @@
   let dialogAddExercise:Dialog;
   let dialogChangeDayLabel:Dialog
   let dialogDeleteProgramDayConfirmation:Dialog
+  let dialogDeleteExerciseConfirmation:Dialog
   let selectedToBuildName:string = '';
   let selectedToBuild: builtProgram | null = null;
   let enterName:string = '';
   let enterDayName:string = '';
-  let newLabelInput = '';
+  let newLabelInput:string = '';
   let activeIndex:number;
+  let pendingDeleteDayIndex:number | null = null;
+  let pendingDeleteExerciseIndex:number | null = null;
 
 
 $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName) || null;
@@ -179,6 +182,27 @@ function handleAddProgram() {
   }
 }
 
+
+function removeExercise(dayIndex, exerciseIndex) {
+  builtPrograms.update(programs => {
+    const updated = [...programs];
+
+    const programIndex = updated.findIndex(p => p.name === selectedToBuildName);
+    if (programIndex === -1) return programs;
+
+    const day = { ...updated[programIndex].days[dayIndex] };
+    const exercises = [...day.exercises];
+
+    exercises.splice(exerciseIndex, 1); // remove the exercise
+
+    day.exercises = exercises;
+    updated[programIndex].days = [...updated[programIndex].days];
+    updated[programIndex].days[dayIndex] = day;
+
+    return updated;
+  });
+}
+
 function AddDay(){
  let daysInProgram = selectedToBuild?.days.length
 console.log(daysInProgram)
@@ -244,20 +268,33 @@ setBuildTemp();
                           <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
                             <div class="grid grid-cols-2 text-md font-bold text-white mb-1">
                               <div class="flex justify-center items-center">{exercise.name}</div>
-                             
-                              <div class= 'flex gap-8 justify-center'>
-                                <div class="flex  items-center">
-                                    <button on:click={() => removeSet(dayIndex, exerciseIndex)}>
-                                      <img class="w-5 h-5 filter invert brightness-0" src={less} alt="less" />
-                                    </button>
+
+                                <div class= 'flex gap-8 justify-center'>
+
+                                  <div class="flex  items-center">
+                                      <button on:click={() => removeSet(dayIndex, exerciseIndex)}>
+                                        <img class="w-5 h-5 filter invert brightness-0" src={less} alt="less" />
+                                      </button>
                                   </div>
-                              
+                                
                                   <div class="flex justify-center items-center">
                                     <button on:click={() => addSet(dayIndex, exerciseIndex)}>
                                       <img class="w-5 h-5 filter invert brightness-0" src={more} alt="more" />
                                     </button>
                                   </div>
-                              </div>
+
+                                  
+                                  <div class='flex justify-end items-center'>
+                                    <button on:click={() => {
+                                      pendingDeleteDayIndex = dayIndex;
+                                      pendingDeleteExerciseIndex = exerciseIndex;
+                                      dialogDeleteExerciseConfirmation.showModal();
+                                    }}>
+                                      <img class='w-5 h-5 invert'src="{cancel}" alt="">
+                                    </button>
+                                  </div>
+                                </div>
+
                             </div>
                     
                             {#each sets as set}
@@ -391,32 +428,36 @@ setBuildTemp();
   </div>
 </Dialog>
 
-<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
+<Dialog bind:dialog={dialogDeleteExerciseConfirmation}>
   <div class="p-6 bg-gray-800 text-white w-80">
-    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
+    <h2 class="text-xl font-bold mb-4 text-center">Confirm Deletion</h2>
+    <p class="text-center text-gray-300">
+      Are you sure you want to delete this exercise?
+    </p>
+
     <form
-      on:submit|preventDefault={handleAddProgram}
-      class="flex flex-col space-y-4"
+      method="dialog"
+      class="flex flex-col space-y-4 mt-4"
+      on:submit|preventDefault={() => {
+        removeExercise(pendingDeleteDayIndex, pendingDeleteExerciseIndex);
+        toast.success('Exercise deleted');
+        dialogDeleteExerciseConfirmation.close();
+      }}
     >
-      <input
-        bind:value={enterName}
-        type="text"
-        placeholder="Program name"
-        class="border p-2 bg-gray-700 text-white focus:ring-blue-500"
-      />
       <button
         type="submit"
-        class="bg-blue-600 hover:bg-blue-500 text-white font-semibold p-2 rounded transition"
+        class="bg-red-600 hover:bg-red-500 text-white font-semibold p-2 rounded transition"
       >
-        Add New Program
+        Delete
       </button>
       <button
         type="button"
         class="text-sm text-gray-400 hover:text-white"
-        on:click={() => dialog.close()}
+        on:click={() => dialogDeleteExerciseConfirmation.close()}
       >
         Cancel
       </button>
     </form>
   </div>
 </Dialog>
+
