@@ -53,7 +53,7 @@ function changeDayLabel(index:number, newLabel:string){
   selectedToBuild = programCopy
   console.log('testChangeDay')
 }
-function deleteDay(index) {
+function deleteDay(index:number) {
   console.log(selectedToBuild)
   if(!selectedToBuild){return}
   const programCopy:builtProgram = {...selectedToBuild}
@@ -340,7 +340,26 @@ setBuildTemp();
 </div> 
 
 
-
+<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
+  <div class="p-6 bg-gray-800 text-white w-80">
+    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
+    <form on:submit|preventDefault={handleAddProgram} class="flex flex-col space-y-4">
+      <input
+        id="programName"
+        class="border   p-2 bg-gray-700 text-white   focus:ring-purple-500"
+        bind:value={enterName}
+        type="text"
+        placeholder="Enter program name"
+      />
+      <button
+        class="bg-purple-600 hover:bg-purple-500 text-white font-semibold p-2 rounded transition"
+        type="submit"
+      >
+        Add Program
+      </button>
+    </form>
+  </div>
+</Dialog>
 
 <Dialog bind:dialog={dialogChangeDayLabel}>
   <div class="p-6 bg-gray-800 text-white w-80">
@@ -400,7 +419,7 @@ setBuildTemp();
 <Dialog bind:dialog={dialogDeleteProgramDayConfirmation}>
   <div class="p-6 bg-gray-800 text-white w-80">
     <h2 class="text-xl font-bold mb-4 text-center">Confirm Deletion</h2>
-    <p class="text-center text-gray-300 font-semibold text-white">
+    <p class="text-center text-gray-300 font-semibold">
       Are you sure you want to delete
       <span class="italic mx-1">
         {selectedToBuild?.days[activeIndex]?.label || 'this day'}
@@ -466,23 +485,3 @@ setBuildTemp();
   </div>
 </Dialog>
 
-<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
-  <div class="p-6 bg-gray-800 text-white w-lg ">
-    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
-    <form on:submit|preventDefault={handleAddProgram} class="flex flex-col space-y-4">
-      <input
-        id="programName"
-        class="border   p-2 bg-gray-700 text-white   focus:ring-purple-500"
-        bind:value={enterName}
-        type="text"
-        placeholder="Enter program name"
-      />
-      <button
-        class="bg-purple-600 hover:bg-purple-500 text-white font-semibold p-2 rounded transition"
-        type="submit"
-      >
-        Add Program
-      </button>
-    </form>
-  </div>
-</Dialog>

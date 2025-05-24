@@ -5,14 +5,12 @@
   import next from '../../lib/svg/next.svg';
   import replace from '../../lib/svg/switch.svg';
   import Dialog from '../../lib/components/dialog.svelte';
-  import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms} from '../../lib/stores/data_store';
-	import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
+  import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms, exerciseHistory} from '../../lib/stores/data_store';
+  import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
 	import { onMount } from 'svelte';
-	import { get } from 'svelte/store';
-  
-  
-  
-  
+	// import { get } from 'svelte/store';
+
+
   let dialog:Dialog;
   let selectedExerciseIndex:number|null = null;
   let selectedSwapExercise:PlannedExercise|null = null;
@@ -20,20 +18,6 @@
   let currentActiveBuiltProgramDayNumber:number|null
   let currentDayLabel:string | undefined;
 
-//   onMount(async () => {
-// 	currentActiveBuiltProgramName = $CurrentActiveBuiltProgram.name;
-// 	currentActiveBuiltProgramDayNumber = $CurrentActiveBuiltProgram.currentDay;
-
-// 	const allPrograms = $builtPrograms;
-// 	const selectedProgram = allPrograms.find(p => p.name === currentActiveBuiltProgramName);
-// 	if (!selectedProgram) return;
-
-// 	const day = selectedProgram.days.find(d => d.dayNumber === currentActiveBuiltProgramDayNumber);
-// 	if (!day) return;
-  
-//   currentDayLabel = day.label
-// 	personalProgram.set({ ...day });
-// });
 onMount(() => {
 	setupDay();
 });
@@ -105,16 +89,31 @@ function setupDay() {
       return copyProgram;
     });
   }
+  function flushSessionToHistory() {
+
+  }
   function goToNextDay() {
-  CurrentActiveBuiltProgram.update(program => {
-    const nextDay = program.currentDay + 1;
-    const wrappedDay = nextDay > program.daysAmount ? 1 : nextDay;
-    return { ...program, currentDay: wrappedDay };
+    flushSessionToHistory();
+    CurrentActiveBuiltProgram.update(program => {
+      const nextDay = program.currentDay + 1;
+      const wrappedDay = nextDay > program.daysAmount ? 1 : nextDay;
+      return { ...program, currentDay: wrappedDay };
   });
 
   setupDay(); 
 }
-                                                  
+
+function goToNextDayTest(){
+  let todaysExercises = $personalProgram.exercises
+  let destinationOfTodaysExercises = $exerciseHistory
+
+  // let finalObjectToPush:
+  console.log('today:', todaysExercises)
+  
+  console.log(destinationOfTodaysExercises)     
+}
+
+                                         
 </script>
 
 <div class="bg-gray-700">
@@ -173,13 +172,13 @@ function setupDay() {
                                   bind:value={set.weight}
                                   type="number"
                                   class="text-sm w-14 h-7 border-t border-l border-r bg-green-600 text-white"
-                                  placeholder="Reps?" 
+                                  placeholder="KG?" 
                                 />
                                 <input
                                   bind:value={set.reps}
                                   type="number"
                                   class="text-sm w-14 h-7 border-b border-l border-r bg-blue-600 text-white"
-                                  placeholder="Kg?" 
+                                  placeholder="Reps?" 
                                 />
                               </div>
                             {/if}
@@ -191,23 +190,28 @@ function setupDay() {
       {/each}
       
       <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions --><div
-      on:click={goToNextDay}
-      class="bg-gray-800 p-4 rounded-lg shadow border border-gray-700 hover:bg-gray-700 cursor-pointer transition active:scale-95"
-    >
-      <div class="grid grid-cols-2 mb-2">
-        <h2 class="Title flex flex-col flex-wrap font-semibold text-white">
-          ➕ Next Day
-          <div class="text-xs text-gray-400 mb-1">Go to the next workout day</div>
-        </h2>
-        <div class="flex justify-end items-center">
-          <img src={next} alt="Next Day" class="w-6 h-6 filter invert brightness-0" />
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div
+        on:click={goToNextDay}
+        class="bg-gray-800 p-4 rounded-lg shadow border border-gray-700 hover:bg-gray-700 cursor-pointer transition active:scale-95">
+        <div class="grid grid-cols-2 mb-2">
+          <h2 class="Title flex flex-col flex-wrap font-semibold text-white">
+            ➕ End Day
+            <div class="text-xs text-gray-400 mb-1">Go to the next workout day</div>
+          </h2>
+          <div class="flex justify-end items-center">
+            <img src={next} alt="Next Day" class="w-6 h-6 filter invert brightness-0" />
+          </div>
         </div>
       </div>
-    </div>
-    </div>
-    
-      
+
+      <div
+        on:click={goToNextDayTest}
+        class="bg-gray-800 p-4 text-white rounded-lg shadow border border-gray-700 hover:bg-gray-700 cursor-pointer transition active:scale-95">
+hallo ik knop
+      </div>
+
+    </div> 
   </div>
 </div>
 
