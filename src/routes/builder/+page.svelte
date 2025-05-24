@@ -21,11 +21,13 @@
   let selectedAddExercise:Exercise|null = null;
 
   let days:Record<string, ProgramDay>
+
   let dialog:Dialog;
   let dialogAddExercise:Dialog;
   let dialogChangeDayLabel:Dialog
   let dialogDeleteProgramDayConfirmation:Dialog
   let dialogDeleteExerciseConfirmation:Dialog
+
   let selectedToBuildName:string = '';
   let selectedToBuild: builtProgram | null = null;
   let enterName:string = '';
@@ -264,53 +266,57 @@ setBuildTemp();
                   data-day-index={dayIndex}>
                   <CollapsibleSection headerText={`${day.dayNumber}. ${day.label}`}>
                       <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
+                        {#if day.exercises.length > 0}
                           {#each day.exercises as { exercise, sets }, exerciseIndex}
-                          <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
-                            <div class="grid grid-cols-2 text-md font-bold text-white mb-1">
-                              <div class="flex justify-center items-center">{exercise.name}</div>
+                              <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
+                                <div class="grid grid-cols-2 text-md font-bold text-white mb-1">
+                                  <div class="flex justify-center items-center">{exercise.name}</div>
 
-                                <div class= 'flex gap-8 justify-center'>
+                                    <div class= 'flex gap-4 justify-center'>
 
-                                  <div class="flex  items-center">
-                                      <button on:click={() => removeSet(dayIndex, exerciseIndex)}>
-                                        <img class="w-5 h-5 filter invert brightness-0" src={less} alt="less" />
-                                      </button>
-                                  </div>
-                                
-                                  <div class="flex justify-center items-center">
-                                    <button on:click={() => addSet(dayIndex, exerciseIndex)}>
-                                      <img class="w-5 h-5 filter invert brightness-0" src={more} alt="more" />
-                                    </button>
-                                  </div>
+                                      <div class="flex  items-center">
+                                          <button class = "rounded-lg  bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90" on:click={() => removeSet(dayIndex, exerciseIndex)}>
+                                            <img class="w-5 h-5 filter invert brightness-0" src={less} alt="less" />
+                                          </button>
+                                      </div>
+                                    
+                                      <div class="flex justify-center items-center">
+                                        <button class="rounded-lg  bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90" on:click={() => addSet(dayIndex, exerciseIndex)}>
+                                          <img class="w-5 h-5 filter invert brightness-0" src={more} alt="more" />
+                                        </button>
+                                      </div>
 
-                                  
-                                  <div class='flex justify-end items-center'>
-                                    <button on:click={() => {
-                                      pendingDeleteDayIndex = dayIndex;
-                                      pendingDeleteExerciseIndex = exerciseIndex;
-                                      dialogDeleteExerciseConfirmation.showModal();
-                                    }}>
-                                      <img class='w-5 h-5 invert'src="{cancel}" alt="">
-                                    </button>
-                                  </div>
+                                      
+                                      <div class='flex justify-end items-center'>
+                                        <button class = "rounded-lg  bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90" on:click={() => {
+                                          pendingDeleteDayIndex = dayIndex;
+                                          pendingDeleteExerciseIndex = exerciseIndex;
+                                          dialogDeleteExerciseConfirmation.showModal();
+                                        }}>
+                                          <img class='w-5 h-5 invert'src="{cancel}" alt="">
+                                        </button>
+                                      </div>
+                                    </div>
+
                                 </div>
-
-                            </div>
-                    
-                            {#each sets as set}
-                              <div class="flex items-center space-around justify-center bg-gray-600 rounded-md p-1 mb-1">
-                                <span class="font-medium flex-start text-gray-200">Set {set.setNumber}:</span>
-                                <input 
-                                  placeholder={set.reps ?? ''} 
-                                  class="border border-gray-500 rounded-md w-14 mx-1 p-1 text-center focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-700 text-white"
-                                  type="number"
-                                />
-                                <span class="text-gray-300">reps</span>
-                              </div>
-                            {/each}
+                        
+                                {#each sets as set}
+                                  <div class="flex items-center space-around justify-center bg-gray-600 rounded-md p-1 mb-1">
+                                    <span class="font-medium flex-start text-gray-200">Set {set.setNumber}:</span>
+                                    <input 
+                                      placeholder={set.reps ?? ''} 
+                                      class="border border-gray-500 rounded-md w-14 mx-1 p-1 text-center focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-700 text-white"
+                                      type="number"
+                                    />
+                                    <span class="text-gray-300">reps</span>
+                                  </div>
+                                {/each}
   
                           </div>
-                        {/each}
+                          {/each}
+                        {:else}
+                        <div class= " p-1 flex justify-center text-white">EMPTY! Click the plus to add an exercise! </div>
+                        {/if}
                         <button on:click={() => addExercise(dayIndex)} class="w-full flex items-center space-around justify-center bg-gray-600 rounded-md p-1 mb-1">
                             <img class="w-5 h-5 filter invert brightness-0" src="{more}" alt=""> 
                         </button>
@@ -368,7 +374,6 @@ setBuildTemp();
     </form>
   </div>
 </Dialog>
-
 
 <Dialog bind:dialog={dialogAddExercise}>
   <div class="p-6 bg-gray-800 text-white w-96 max-w-full ">
@@ -461,3 +466,23 @@ setBuildTemp();
   </div>
 </Dialog>
 
+<Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
+  <div class="p-6 bg-gray-800 text-white w-lg ">
+    <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
+    <form on:submit|preventDefault={handleAddProgram} class="flex flex-col space-y-4">
+      <input
+        id="programName"
+        class="border   p-2 bg-gray-700 text-white   focus:ring-purple-500"
+        bind:value={enterName}
+        type="text"
+        placeholder="Enter program name"
+      />
+      <button
+        class="bg-purple-600 hover:bg-purple-500 text-white font-semibold p-2 rounded transition"
+        type="submit"
+      >
+        Add Program
+      </button>
+    </form>
+  </div>
+</Dialog>

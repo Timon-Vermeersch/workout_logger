@@ -2,7 +2,8 @@
   import Stopwatch from '../../lib/components/stopwatch.svelte';
   import more from '../../lib/svg/more.svg';
   import less from '../../lib/svg/less.svg';
-  import next from '../../lib/svg/next.svg'
+  import next from '../../lib/svg/next.svg';
+  import replace from '../../lib/svg/switch.svg';
   import Dialog from '../../lib/components/dialog.svelte';
   import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms} from '../../lib/stores/data_store';
 	import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
@@ -113,7 +114,7 @@ function setupDay() {
 
   setupDay(); 
 }
-
+                                                  
 </script>
 
 <div class="bg-gray-700">
@@ -148,7 +149,7 @@ function setupDay() {
               </button>
 
               <button on:click={() => swapExercise(index)} class="rounded-lg bg-gray-600 text-white p-2 hover:bg-gray-500 active:scale-90">
-                ⇆
+                <img class="w-5 h-5 filter invert brightness-0" src={replace} alt="Remove Set" />
               </button>
             </div>
           </div>
@@ -209,7 +210,7 @@ function setupDay() {
       
   </div>
 </div>
-<!-- TODO: timon fix this -->
+
 <Dialog bind:dialog>
   <div class="p-6 bg-gray-800 text-white w-96 max-w-full ">
     <h2 class="text-xl font-bold mb-4">Choose your Pokemon</h2>

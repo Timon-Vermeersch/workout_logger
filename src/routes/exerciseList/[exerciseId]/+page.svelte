@@ -9,10 +9,10 @@
     let selectedExercise = $state<Exercise | undefined>(undefined);
     function goBack() {
         if (history.length > 1) {
-            history.back();
-        } else {
-    goto('/exerciseList'); 
-  }
+          history.back();} 
+        else {
+          goto('/exerciseList');
+        }
 }
     onMount(() => {
       const unsubscribe = Exerciseslist.subscribe(value => {
@@ -25,11 +25,11 @@
   <div class="sticky min-h-[100dvh] bg-gray-700 text-white">
     <!-- Header -->
     <div class="relative flex items-center justify-center bg-gray-800 text-white text-lg font-semibold min-h-12 px-4">
-        <button on:click={goBack} class="absolute left-4">
+        <button onclick={goBack} class="absolute left-4">
           ← Back
         </button>
       
-        <div class="truncate">
+        <div class="">
           {selectedExercise?.name}
         </div>
       </div>
