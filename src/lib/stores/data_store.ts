@@ -356,3 +356,5 @@ export const CurrentActiveBuiltProgram = writable<ActiveProgramRef>({
 	currentDay: 1,
 	daysAmount : 2
 })
+
+// export const 
