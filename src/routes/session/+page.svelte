@@ -5,7 +5,7 @@
   import next from '../../lib/svg/next.svg';
   import replace from '../../lib/svg/switch.svg';
   import Dialog from '../../lib/components/dialog.svelte';
-  import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms, exerciseHistory} from '../../lib/stores/data_store';
+  import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms, exerciseHistory, completedProgramDaysHistory} from '../../lib/stores/data_store';
   import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
 	import { onMount } from 'svelte';
 	// import { get } from 'svelte/store';
@@ -89,9 +89,60 @@ function setupDay() {
       return copyProgram;
     });
   }
+  
   function flushSessionToHistory() {
+  const today = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD
+  const program = $personalProgram;
 
-  }
+  // 1. Push to completedProgramDays
+  completedProgramDaysHistory.update(days => {
+    return [
+      ...days,
+      {
+        dayNumber: days.length + 1,
+        date: today,
+        exercises: program.exercises.map(pe => ({
+          exerciseId: pe.exercise.id,
+          sets: pe.sets
+        }))
+      }
+    ];
+  });
+
+  // 2. Push to exerciseHistory (append by exerciseId)
+  exerciseHistory.update(history => {
+    const updated = [...history];
+
+    for (const pe of program.exercises) {
+      const existing = updated.find(h => h.exerciseId === pe.exercise.id);
+      const entry = {
+        date: today,
+        sets: pe.sets
+      };
+
+      if (existing) {
+        existing.historyArray.push(entry);
+      } else {
+        updated.push({
+          exerciseId: pe.exercise.id,
+          historyArray: [entry]
+        });
+      }
+    }
+
+    return updated;
+  });
+
+  // 3. Optionally clear the sets
+  personalProgram.update(p => {
+    const cleared = { ...p };
+    cleared.exercises = cleared.exercises.map(ex => ({
+      ...ex,
+      sets: []
+    }));
+    return cleared;
+  });
+}
   function goToNextDay() {
     flushSessionToHistory();
     CurrentActiveBuiltProgram.update(program => {

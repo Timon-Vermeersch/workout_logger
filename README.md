@@ -1,17 +1,16 @@
 # Todo
 
-
 ## /Builder
 
 delete:
-    drizzle.config.ts
-    hooks.server.ts
-        lib/server->
-            auth.ts
-            index.ts
-            schema.ts 
+drizzle.config.ts
+hooks.server.ts
+lib/server->
+auth.ts
+index.ts
+schema.ts
 
-check -> dayhistory.ts , exerciseHistory.ts , 
+check -> dayhistory.ts , exerciseHistory.ts
 
 # Todo
 
@@ -27,11 +26,13 @@ check -> dayhistory.ts , exerciseHistory.ts ,
 ## Add new features
 
 - [ ] `flushSessionToHistory()`:
+
   - [ ] Generate `sessionId` (uuid)
-  - [ ] Push full day to `completedProgramDays`
+  - [ ] Push full day to `completedProgramDaysHistory`
   - [ ] Push each exercise to `exerciseHistory` using same `sessionId`
 
 - [ ] `updateSetInHistory({ exerciseId, sessionId, setNumber, newData })`:
+
   - [ ] Edit the matching set in both stores
 
 - [ ] `deleteSession(sessionId)`:
@@ -45,6 +46,6 @@ check -> dayhistory.ts , exerciseHistory.ts ,
 
 ## Optional (later)
 
-- [ ] Derive `exerciseHistory` from `completedProgramDays`
+- [ ] Derive `exerciseHistory` from `completedProgramDaysHistory`
 - [ ] Add UI for editing past sessions
 - [ ] Add import/export for backup

@@ -5,10 +5,230 @@ import type { ProgramDay } from '$lib/interfaces/programDay';
 import type { equipment, muscleGroupTypes } from '../interfaces/exercise';
 import type { ActiveProgramRef } from '$lib/interfaces/activeProgramRef';
 import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
+import type { DayHistory } from '$lib/interfaces/dayHistory';
 
 export const exerciseHistory = writable<ExerciseHistory[]>([
-	
-  ]);
+	{
+		exerciseId: 1, // Flat Bench Press
+		historyArray: [
+			{
+				date: '2025-08-01',
+				sets: [
+					{ setNumber: 1, weight: 100, reps: 10 },
+					{ setNumber: 2, weight: 100, reps: 8 },
+					{ setNumber: 3, weight: 90, reps: 6 }
+				]
+			},
+			{
+				date: '2025-08-04',
+				sets: [
+					{ setNumber: 1, weight: 110, reps: 10 },
+					{ setNumber: 2, weight: 110, reps: 8 },
+					{ setNumber: 3, weight: 100, reps: 6 }
+				]
+			}
+		]
+	},
+	{
+		exerciseId: 2, // Pull-Ups
+		historyArray: [
+			{
+				date: '2025-08-02',
+				sets: [
+					{ setNumber: 1, reps: 12 },
+					{ setNumber: 2, reps: 10 },
+					{ setNumber: 3, reps: 8 }
+				]
+			},
+			{
+				date: '2025-08-05',
+				sets: [
+					{ setNumber: 1, reps: 15 },
+					{ setNumber: 2, reps: 12 },
+					{ setNumber: 3, reps: 10 }
+				]
+			}
+		]
+	},
+	{
+		exerciseId: 3, // Incline Dumbbell Press
+		historyArray: [
+			{
+				date: '2025-08-01',
+				sets: [
+					{ setNumber: 1, weight: 30, reps: 10 },
+					{ setNumber: 2, weight: 30, reps: 10 },
+					{ setNumber: 3, weight: 25, reps: 8 }
+				]
+			},
+			{
+				date: '2025-08-04',
+				sets: [
+					{ setNumber: 1, weight: 35, reps: 10 },
+					{ setNumber: 2, weight: 35, reps: 10 },
+					{ setNumber: 3, weight: 30, reps: 8 }
+				]
+			}
+		]
+	},
+	{
+		exerciseId: 4, // Barbell Row
+		historyArray: [
+			{
+				date: '2025-08-02',
+				sets: [
+					{ setNumber: 1, weight: 60, reps: 10 },
+					{ setNumber: 2, weight: 60, reps: 8 }
+				]
+			},
+			{
+				date: '2025-08-05',
+				sets: [
+					{ setNumber: 1, weight: 70, reps: 10 },
+					{ setNumber: 2, weight: 70, reps: 8 }
+				]
+			}
+		]
+	},
+	{
+		exerciseId: 12, // Barbell Squat
+		historyArray: [
+			{
+				date: '2025-08-03',
+				sets: [
+					{ setNumber: 1, weight: 100, reps: 5 },
+					{ setNumber: 2, weight: 100, reps: 5 },
+					{ setNumber: 3, weight: 100, reps: 5 }
+				]
+			},
+			{
+				date: '2025-08-06',
+				sets: [
+					{ setNumber: 1, weight: 120, reps: 5 },
+					{ setNumber: 2, weight: 120, reps: 5 },
+					{ setNumber: 3, weight: 120, reps: 5 }
+				]
+			}
+		]
+	}
+]);
+
+export const completedProgramDaysHistory = writable<DayHistory[]>([
+	{
+		dayNumber: 1,
+		date: '2025-08-01',
+		exercises: [
+			{
+				exerciseId: 1,
+				sets: [
+					{ setNumber: 1, weight: 100, reps: 10 },
+					{ setNumber: 2, weight: 100, reps: 8 },
+					{ setNumber: 3, weight: 90, reps: 6 }
+				]
+			},
+			{
+				exerciseId: 3,
+				sets: [
+					{ setNumber: 1, weight: 30, reps: 10 },
+					{ setNumber: 2, weight: 30, reps: 10 },
+					{ setNumber: 3, weight: 25, reps: 8 }
+				]
+			}
+		]
+	},
+	{
+		dayNumber: 2,
+		date: '2025-08-02',
+		exercises: [
+			{
+				exerciseId: 2,
+				sets: [
+					{ setNumber: 1, reps: 12 },
+					{ setNumber: 2, reps: 10 },
+					{ setNumber: 3, reps: 8 }
+				]
+			},
+			{
+				exerciseId: 4,
+				sets: [
+					{ setNumber: 1, weight: 60, reps: 10 },
+					{ setNumber: 2, weight: 60, reps: 8 }
+				]
+			}
+		]
+	},
+	{
+		dayNumber: 3,
+		date: '2025-08-03',
+		exercises: [
+			{
+				exerciseId: 12,
+				sets: [
+					{ setNumber: 1, weight: 100, reps: 5 },
+					{ setNumber: 2, weight: 100, reps: 5 },
+					{ setNumber: 3, weight: 100, reps: 5 }
+				]
+			}
+		]
+	},
+	{
+		dayNumber: 4,
+		date: '2025-08-04',
+		exercises: [
+			{
+				exerciseId: 1,
+				sets: [
+					{ setNumber: 1, weight: 110, reps: 10 },
+					{ setNumber: 2, weight: 110, reps: 8 },
+					{ setNumber: 3, weight: 100, reps: 6 }
+				]
+			},
+			{
+				exerciseId: 3,
+				sets: [
+					{ setNumber: 1, weight: 35, reps: 10 },
+					{ setNumber: 2, weight: 35, reps: 10 },
+					{ setNumber: 3, weight: 30, reps: 8 }
+				]
+			}
+		]
+	},
+	{
+		dayNumber: 5,
+		date: '2025-08-05',
+		exercises: [
+			{
+				exerciseId: 2,
+				sets: [
+					{ setNumber: 1, reps: 15 },
+					{ setNumber: 2, reps: 12 },
+					{ setNumber: 3, reps: 10 }
+				]
+			},
+			{
+				exerciseId: 4,
+				sets: [
+					{ setNumber: 1, weight: 70, reps: 10 },
+					{ setNumber: 2, weight: 70, reps: 8 }
+				]
+			}
+		]
+	},
+	{
+		dayNumber: 6,
+		date: '2025-08-06',
+		exercises: [
+			{
+				exerciseId: 12,
+				sets: [
+					{ setNumber: 1, weight: 120, reps: 5 },
+					{ setNumber: 2, weight: 120, reps: 5 },
+					{ setNumber: 3, weight: 120, reps: 5 }
+				]
+			}
+		]
+	}
+]);
 
 export const Exerciseslist = writable<GlobalExerciselist>({
 	exercises: [
@@ -18,7 +238,7 @@ export const Exerciseslist = writable<GlobalExerciselist>({
 			explanation: 'just bench BRO',
 			exerciseGif: '/gifs/rat.gif',
 			muscleGroups: new Set<muscleGroupTypes>(['chest', 'triceps']),
-			equipmentUsed: new Set<Equipment>(['barbell'  as Equipment , 'smith machine '])
+			equipmentUsed: new Set<Equipment>(['barbell' as Equipment, 'smith machine '])
 		},
 		{
 			id: 2,
@@ -55,8 +275,6 @@ export const personalProgram = writable<ProgramDay>({
 	dayNumber: 1,
 	exercises: []
 });
-
-//fixed builtPrograms
 
 export const builtPrograms = writable<Array<builtProgram>>([
 	// this obj is 1 selectedTobuild
@@ -95,10 +313,10 @@ export const builtPrograms = writable<Array<builtProgram>>([
 							}
 						},
 						sets: [
-							{ setNumber: 1, reps: 12 , weight: 100},
-							{ setNumber: 2, reps: 10 , weight: 100},
-							{ setNumber: 3, reps: 8 , weight: 100},
-							{ setNumber: 4, reps: 6 , weight: 100}
+							{ setNumber: 1, reps: 12, weight: 100 },
+							{ setNumber: 2, reps: 10, weight: 100 },
+							{ setNumber: 3, reps: 8, weight: 100 },
+							{ setNumber: 4, reps: 6, weight: 100 }
 						]
 					},
 					{
@@ -215,7 +433,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 		days: [
 			{
 				dayNumber: 1,
-				label:'Back day Strength',
+				label: 'Back day Strength',
 				exercises: [
 					{
 						exercise: {
@@ -274,7 +492,18 @@ export const builtPrograms = writable<Array<builtProgram>>([
 								exerciseId: 10,
 								date: new Date(),
 								sets: [
-									{ id: 1, exerciseHistoryId: 10, setNumber: 1, weight: 40, reps: 8, wrapsUsed: false, strapsUsed: false, sleevesUsed: false, rpe: 8, extraNote: '' }
+									{
+										id: 1,
+										exerciseHistoryId: 10,
+										setNumber: 1,
+										weight: 40,
+										reps: 8,
+										wrapsUsed: false,
+										strapsUsed: false,
+										sleevesUsed: false,
+										rpe: 8,
+										extraNote: ''
+									}
 								]
 							}
 						},
@@ -302,7 +531,18 @@ export const builtPrograms = writable<Array<builtProgram>>([
 								exerciseId: 11,
 								date: new Date(),
 								sets: [
-									{ id: 1, exerciseHistoryId: 11, setNumber: 1, weight: 70, reps: 10, wrapsUsed: false, strapsUsed: true, sleevesUsed: false, rpe: 7, extraNote: 'Grip slipped on 3rd set' }
+									{
+										id: 1,
+										exerciseHistoryId: 11,
+										setNumber: 1,
+										weight: 70,
+										reps: 10,
+										wrapsUsed: false,
+										strapsUsed: true,
+										sleevesUsed: false,
+										rpe: 7,
+										extraNote: 'Grip slipped on 3rd set'
+									}
 								]
 							}
 						},
@@ -330,7 +570,18 @@ export const builtPrograms = writable<Array<builtProgram>>([
 								exerciseId: 12,
 								date: new Date(),
 								sets: [
-									{ id: 1, exerciseHistoryId: 12, setNumber: 1, weight: 100, reps: 5, wrapsUsed: true, strapsUsed: false, sleevesUsed: true, rpe: 9, extraNote: 'Heavy but clean form' }
+									{
+										id: 1,
+										exerciseHistoryId: 12,
+										setNumber: 1,
+										weight: 100,
+										reps: 5,
+										wrapsUsed: true,
+										strapsUsed: false,
+										sleevesUsed: true,
+										rpe: 9,
+										extraNote: 'Heavy but clean form'
+									}
 								]
 							}
 						},
@@ -343,18 +594,13 @@ export const builtPrograms = writable<Array<builtProgram>>([
 				]
 			}
 		]
-	},
-
-
-	
-	
+	}
 ]);
 
-
 export const CurrentActiveBuiltProgram = writable<ActiveProgramRef>({
-	name:'Nsuns1',
+	name: 'Nsuns1',
 	currentDay: 1,
-	daysAmount : 2
-})
+	daysAmount: 2
+});
 
-// export const 
+// export const ExerciseHistory

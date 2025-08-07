@@ -7,7 +7,7 @@ export interface Exercise {
 	explanation?: string;
 	muscleGroups: Set<muscleGroupTypes>;
 	equipmentUsed?: Set<EquipmentTypes>;
-	exerciseHistory?: ExerciseHistory;
+	
 }
 
 // export type muscleGroupTypes = 'chest' | 'triceps' | 'back' | 'biceps';
