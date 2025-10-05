@@ -1,5 +1,5 @@
 <script lang="ts">
-  // imports
+// imports
   import book from '../svg/book.svg'
   import dumbell from '../svg/dumbell.svg'
   import fire from '../svg/Fire.svg'
@@ -7,7 +7,7 @@
   import graph1 from '../svg/graph1.svg'
   import more from '../svg/more.svg'
   import { page } from '$app/state';
-  // Variables
+// Variables
   let { type } = $props();
 </script>
 <!-- HTML -->

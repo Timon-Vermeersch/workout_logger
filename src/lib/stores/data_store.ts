@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import type { builtProgram } from '$lib/interfaces/builtProgram';
 import type { GlobalExerciselist } from '$lib/interfaces/global-exercise-list';
 import type { ProgramDay } from '$lib/interfaces/programDay';
@@ -6,112 +6,6 @@ import type { equipment, muscleGroupTypes } from '../interfaces/exercise';
 import type { ActiveProgramRef } from '$lib/interfaces/activeProgramRef';
 import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
 import type { DayHistory } from '$lib/interfaces/dayHistory';
-
-export const exerciseHistory = writable<ExerciseHistory[]>([
-	{
-		exerciseId: 1, // Flat Bench Press
-		historyArray: [
-			{
-				date: '2025-08-01',
-				sets: [
-					{ setNumber: 1, weight: 100, reps: 10 },
-					{ setNumber: 2, weight: 100, reps: 8 },
-					{ setNumber: 3, weight: 90, reps: 6 }
-				]
-			},
-			{
-				date: '2025-08-04',
-				sets: [
-					{ setNumber: 1, weight: 110, reps: 10 },
-					{ setNumber: 2, weight: 110, reps: 8 },
-					{ setNumber: 3, weight: 100, reps: 6 }
-				]
-			}
-		]
-	},
-	{
-		exerciseId: 2, // Pull-Ups
-		historyArray: [
-			{
-				date: '2025-08-02',
-				sets: [
-					{ setNumber: 1, reps: 12 },
-					{ setNumber: 2, reps: 10 },
-					{ setNumber: 3, reps: 8 }
-				]
-			},
-			{
-				date: '2025-08-05',
-				sets: [
-					{ setNumber: 1, reps: 15 },
-					{ setNumber: 2, reps: 12 },
-					{ setNumber: 3, reps: 10 }
-				]
-			}
-		]
-	},
-	{
-		exerciseId: 3, // Incline Dumbbell Press
-		historyArray: [
-			{
-				date: '2025-08-01',
-				sets: [
-					{ setNumber: 1, weight: 30, reps: 10 },
-					{ setNumber: 2, weight: 30, reps: 10 },
-					{ setNumber: 3, weight: 25, reps: 8 }
-				]
-			},
-			{
-				date: '2025-08-04',
-				sets: [
-					{ setNumber: 1, weight: 35, reps: 10 },
-					{ setNumber: 2, weight: 35, reps: 10 },
-					{ setNumber: 3, weight: 30, reps: 8 }
-				]
-			}
-		]
-	},
-	{
-		exerciseId: 4, // Barbell Row
-		historyArray: [
-			{
-				date: '2025-08-02',
-				sets: [
-					{ setNumber: 1, weight: 60, reps: 10 },
-					{ setNumber: 2, weight: 60, reps: 8 }
-				]
-			},
-			{
-				date: '2025-08-05',
-				sets: [
-					{ setNumber: 1, weight: 70, reps: 10 },
-					{ setNumber: 2, weight: 70, reps: 8 }
-				]
-			}
-		]
-	},
-	{
-		exerciseId: 12, // Barbell Squat
-		historyArray: [
-			{
-				date: '2025-08-03',
-				sets: [
-					{ setNumber: 1, weight: 100, reps: 5 },
-					{ setNumber: 2, weight: 100, reps: 5 },
-					{ setNumber: 3, weight: 100, reps: 5 }
-				]
-			},
-			{
-				date: '2025-08-06',
-				sets: [
-					{ setNumber: 1, weight: 120, reps: 5 },
-					{ setNumber: 2, weight: 120, reps: 5 },
-					{ setNumber: 3, weight: 120, reps: 5 }
-				]
-			}
-		]
-	}
-]);
 
 export const completedProgramDaysHistory = writable<DayHistory[]>([
 	{
@@ -229,6 +123,34 @@ export const completedProgramDaysHistory = writable<DayHistory[]>([
 		]
 	}
 ]);
+
+export const exerciseHistory = derived(completedProgramDaysHistory, ($dayHistoryList) => {
+	const exerciseGroups = $dayHistoryList.reduce((groups, dayEntry) => {
+		const currentDate = dayEntry.date;
+
+		dayEntry.exercises.forEach((exerciseEntry) => {
+			const exerciseId = exerciseEntry.exerciseId;
+
+			//if non -> declare
+			if (!groups[exerciseId]) {
+				groups[exerciseId] = {
+					exerciseId: exerciseId,
+					historyArray: []
+				};
+			}
+
+			// add date+sets to current group
+			groups[exerciseId].historyArray.push({
+				date: currentDate,
+				sets: exerciseEntry.sets
+			});
+		});
+
+		return groups;
+	}, {});
+
+	return Object.values(exerciseGroups);
+});
 
 export const Exerciseslist = writable<GlobalExerciselist>({
 	exercises: [

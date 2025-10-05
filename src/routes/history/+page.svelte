@@ -13,7 +13,7 @@
   <h1 class="text-2xl font-bold">Workout History</h1>
 
   <!-- Exercise List -->
-  <div class="space-y-2">
+  <!-- <div class="space-y-2">
     <h2 class="text-lg font-semibold">Exercises</h2>
     {#each $Exerciseslist.exercises as ex}
       <button
@@ -23,10 +23,10 @@
         {ex.name}
       </button>
     {/each}
-  </div>
+  </div> -->
 
   <!-- Selected Exercise History -->
-  {#if $selectedExerciseId !== null}
+  <!-- {#if $selectedExerciseId !== null}
     {#each $exerciseHistory.filter(eh => eh.exerciseId === $selectedExerciseId) as history}
       <div class="mt-6 space-y-2">
         <h2 class="text-xl font-semibold">
@@ -47,9 +47,9 @@
         {/each}
       </div>
     {/each}
-  {/if}
+  {/if} -->
   <div class="space-y-4">
-    <h2 class="text-xl font-bold">Completed Program Days</h2>
+    <!-- <h2 class="text-xl font-bold">Completed Program Days</h2>
   
     {#each $completedProgramDaysHistory as day}
       <div class="border border-gray-500 p-4 rounded">
@@ -69,6 +69,11 @@
           </div>
         {/each}
       </div>
-    {/each}
+    {/each} -->
+
+    <!-- {#each Object.entries($exerciseHistory) as [key, value]}
+      <p>{key}: {value}</p>
+    {/each} -->
+    <pre>{JSON.stringify($exerciseHistory, null, 2)}</pre>
   </div>
 </div>
