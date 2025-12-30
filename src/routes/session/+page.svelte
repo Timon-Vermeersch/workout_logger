@@ -6,8 +6,9 @@
   import replace from '../../lib/svg/switch.svg';
   import Dialog from '../../lib/components/dialog.svelte';
   import { personalProgram, Exerciseslist,CurrentActiveBuiltProgram,builtPrograms, exerciseHistory, completedProgramDaysHistory} from '../../lib/stores/data_store';
-  import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
+  import type { PlannedExercise  } from '$lib/interfaces/plannedExercise';
 	import { onMount } from 'svelte';
+	import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
 	// import { get } from 'svelte/store';
 
 
@@ -156,14 +157,40 @@ function setupDay() {
 
 function goToNextDayTest(){
   let todaysExercises = $personalProgram.exercises
-  let destinationOfTodaysExercises = $exerciseHistory
+  let justToday = $personalProgram
 
-  // let finalObjectToPush:
-  console.log('today:', todaysExercises)
+
+  let tempHistory = $exerciseHistory
   
-  console.log(destinationOfTodaysExercises)     
-}
+  // let tempHistory = structuredClone($exerciseHistory)
+console.log(justToday)
+  for (let one_plannedExercise of todaysExercises){
+    for (let ExerciseHistoryType of tempHistory){
+      if(ExerciseHistoryType.exerciseId === one_plannedExercise.exerciseId){
+        console.log('pushedFor' ,  ExerciseHistoryType.exerciseId , one_plannedExercise.exerciseId )
+        ExerciseHistoryType.historyArray.push(
+          {date: '1/1/1', sets: one_plannedExercise.sets})
+      }
+    }
+  }
 
+//  console.log(tempHistory === $exerciseHistory)
+//  console.log(tempHistory)
+//  console.log($exerciseHistory)
+  }
+
+
+
+  
+  
+//temphistory = actualhistrory
+//temphistory.update(xxxxx)
+//actualhistrory = temphistory
+ 
+  
+  
+
+//plannedExercise.exercise.name
                                          
 </script>
 
@@ -256,6 +283,8 @@ function goToNextDayTest(){
         </div>
       </div>
 
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         on:click={goToNextDayTest}
         class="bg-gray-800 p-4 text-white rounded-lg shadow border border-gray-700 hover:bg-gray-700 cursor-pointer transition active:scale-95">

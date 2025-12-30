@@ -99,7 +99,6 @@ function confirmAdd():void {
       const selectedProgramDay:ProgramDay = selectedProgram?.days[selectedExerciseIndex]
       const convertedSelectedExercise:PlannedExercise = {
         exercise : selectedAddExercise, 
-        date: '',
         sets: []
       }
       selectedProgramDay.exercises.push(convertedSelectedExercise)

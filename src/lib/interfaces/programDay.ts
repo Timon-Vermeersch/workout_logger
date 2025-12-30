@@ -5,3 +5,6 @@ export interface ProgramDay {
 	label?: string;
 	exercises: Array<PlannedExercise>;
 }
+
+
+

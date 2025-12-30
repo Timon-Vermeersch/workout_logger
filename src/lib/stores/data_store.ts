@@ -7,6 +7,7 @@ import type { ActiveProgramRef } from '$lib/interfaces/activeProgramRef';
 import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
 import type { DayHistory } from '$lib/interfaces/dayHistory';
 
+//derived<completedProgramDaysHistory>?
 export const exerciseHistory = writable<ExerciseHistory[]>([
 	{
 		exerciseId: 1, // Flat Bench Press
@@ -136,98 +137,99 @@ export const completedProgramDaysHistory = writable<DayHistory[]>([
 			}
 		]
 	},
-	{
-		dayNumber: 2,
-		date: '2025-08-02',
-		exercises: [
-			{
-				exerciseId: 2,
-				sets: [
-					{ setNumber: 1, reps: 12 },
-					{ setNumber: 2, reps: 10 },
-					{ setNumber: 3, reps: 8 }
-				]
-			},
-			{
-				exerciseId: 4,
-				sets: [
-					{ setNumber: 1, weight: 60, reps: 10 },
-					{ setNumber: 2, weight: 60, reps: 8 }
-				]
-			}
-		]
-	},
-	{
-		dayNumber: 3,
-		date: '2025-08-03',
-		exercises: [
-			{
-				exerciseId: 12,
-				sets: [
-					{ setNumber: 1, weight: 100, reps: 5 },
-					{ setNumber: 2, weight: 100, reps: 5 },
-					{ setNumber: 3, weight: 100, reps: 5 }
-				]
-			}
-		]
-	},
-	{
-		dayNumber: 4,
-		date: '2025-08-04',
-		exercises: [
-			{
-				exerciseId: 1,
-				sets: [
-					{ setNumber: 1, weight: 110, reps: 10 },
-					{ setNumber: 2, weight: 110, reps: 8 },
-					{ setNumber: 3, weight: 100, reps: 6 }
-				]
-			},
-			{
-				exerciseId: 3,
-				sets: [
-					{ setNumber: 1, weight: 35, reps: 10 },
-					{ setNumber: 2, weight: 35, reps: 10 },
-					{ setNumber: 3, weight: 30, reps: 8 }
-				]
-			}
-		]
-	},
-	{
-		dayNumber: 5,
-		date: '2025-08-05',
-		exercises: [
-			{
-				exerciseId: 2,
-				sets: [
-					{ setNumber: 1, reps: 15 },
-					{ setNumber: 2, reps: 12 },
-					{ setNumber: 3, reps: 10 }
-				]
-			},
-			{
-				exerciseId: 4,
-				sets: [
-					{ setNumber: 1, weight: 70, reps: 10 },
-					{ setNumber: 2, weight: 70, reps: 8 }
-				]
-			}
-		]
-	},
-	{
-		dayNumber: 6,
-		date: '2025-08-06',
-		exercises: [
-			{
-				exerciseId: 12,
-				sets: [
-					{ setNumber: 1, weight: 120, reps: 5 },
-					{ setNumber: 2, weight: 120, reps: 5 },
-					{ setNumber: 3, weight: 120, reps: 5 }
-				]
-			}
-		]
-	}
+	// {
+	// 	dayNumber: 2,
+	// 	date: '2025-08-02',
+	// 	exercises: [
+	// 		{
+	// 			exerciseId: 2,
+	// 			sets: [
+	// 				{ setNumber: 1, reps: 12 },
+	// 				{ setNumber: 2, reps: 10 },
+	// 				{ setNumber: 3, reps: 8 }
+	// 			]
+	// 		},
+	// 		{
+	// 			exerciseId: 4,
+	// 			sets: [
+	// 				{ setNumber: 1, weight: 60, reps: 10 },
+	// 				{ setNumber: 2, weight: 60, reps: 8 }
+	// 			]
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	dayNumber: 3,
+	// 	date: '2025-08-03',
+	// 	exercises: [
+	// 		{
+	// 			exerciseId: 12,
+	// 			sets: [
+	// 				{ setNumber: 1, weight: 100, reps: 5 },
+	// 				{ setNumber: 2, weight: 100, reps: 5 },
+	// 				{ setNumber: 3, weight: 100, reps: 5 }
+	// 			]
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	dayNumber: 4,
+	// 	date: '2025-08-04',
+	// 	exercises: [
+	// 		{
+	// 			exerciseId: 1,
+	// 			sets: [
+	// 				{ setNumber: 1, weight: 110, reps: 10 },
+	// 				{ setNumber: 2, weight: 110, reps: 8 },
+	// 				{ setNumber: 3, weight: 100, reps: 6 }
+	// 			]
+	// 		},
+	// 		{
+	// 			exerciseId: 3,
+	// 			sets: [
+	// 				{ setNumber: 1, weight: 35, reps: 10 },
+	// 				{ setNumber: 2, weight: 35, reps: 10 },
+	// 				{ setNumber: 3, weight: 30, reps: 8 }
+	// 			]
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	dayNumber: 5,
+	// 	date: '2025-08-05',
+	// 	exercises: [
+	// 		{
+	// 			exerciseId: 2,
+	// 			sets: [
+	// 				{ setNumber: 1, reps: 15 },
+	// 				{ setNumber: 2, reps: 12 },
+	// 				{ setNumber: 3, reps: 10 }
+	// 			]
+	// 		},
+	// 		{
+	// 			exerciseId: 4,
+	// 			sets: [
+	// 				{ setNumber: 1, weight: 70, reps: 10 },
+	// 				{ setNumber: 2, weight: 70, reps: 8 }
+	// 			]
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	dayNumber: 6,
+	// 	date: '2025-08-06',
+	// 	exercises: [
+	// 		{
+	// 			exerciseId: 12,
+	// 			sets: [
+	// 				{ setNumber: 1, weight: 120, reps: 5 },
+	// 				{ setNumber: 2, weight: 120, reps: 5 },
+	// 				{ setNumber: 3, weight: 120, reps: 5 }
+	// 			]
+	// 		}
+	// 	]
+	// }
+
 ]);
 
 export const Exerciseslist = writable<GlobalExerciselist>({
@@ -285,6 +287,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 				dayNumber: 1,
 				label: 'Chest Hypertrophy',
 				exercises: [
+					//set exercise:{} to exerciseId:number
 					{
 						exercise: {
 							id: 1,
@@ -292,7 +295,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 							exerciseGif: 'benchGifString',
 							explanation: 'Classic chest compound exercise.',
 							muscleGroups: new Set(['chest', 'triceps', 'front delts']),
-							exerciseHistoryId: 1,
+							exeerciseHistoryId: 1,
 							exerciseHistory: {
 								exerciseId: 1,
 								date: new Date(),

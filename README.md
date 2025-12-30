@@ -1,5 +1,10 @@
-# Todo
+notepad
 
+session -> completedProgramDaysHistory
+session exports: plannedExercise
+completedProgramDaysHistory expects: DayHistory
+
+------------------------------------------------------------------------------------
 ## /Builder
 
 delete:
@@ -12,6 +17,13 @@ schema.ts
 
 check -> dayhistory.ts , exerciseHistory.ts
 
+
+-------------------
+GetexerciseFun
+const getExerciseById = (id) => exercises.find(exercise => exercise.id === id);
+const exerciseId = 1;
+const exercise = getExerciseById(exerciseId);
+-------------------
 # Todo
 
 ## Fix existing structure
@@ -49,3 +61,5 @@ check -> dayhistory.ts , exerciseHistory.ts
 - [ ] Derive `exerciseHistory` from `completedProgramDaysHistory`
 - [ ] Add UI for editing past sessions
 - [ ] Add import/export for backup
+
+
