@@ -137,99 +137,6 @@ export const completedProgramDaysHistory = writable<DayHistory[]>([
 			}
 		]
 	},
-	// {
-	// 	dayNumber: 2,
-	// 	date: '2025-08-02',
-	// 	exercises: [
-	// 		{
-	// 			exerciseId: 2,
-	// 			sets: [
-	// 				{ setNumber: 1, reps: 12 },
-	// 				{ setNumber: 2, reps: 10 },
-	// 				{ setNumber: 3, reps: 8 }
-	// 			]
-	// 		},
-	// 		{
-	// 			exerciseId: 4,
-	// 			sets: [
-	// 				{ setNumber: 1, weight: 60, reps: 10 },
-	// 				{ setNumber: 2, weight: 60, reps: 8 }
-	// 			]
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	dayNumber: 3,
-	// 	date: '2025-08-03',
-	// 	exercises: [
-	// 		{
-	// 			exerciseId: 12,
-	// 			sets: [
-	// 				{ setNumber: 1, weight: 100, reps: 5 },
-	// 				{ setNumber: 2, weight: 100, reps: 5 },
-	// 				{ setNumber: 3, weight: 100, reps: 5 }
-	// 			]
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	dayNumber: 4,
-	// 	date: '2025-08-04',
-	// 	exercises: [
-	// 		{
-	// 			exerciseId: 1,
-	// 			sets: [
-	// 				{ setNumber: 1, weight: 110, reps: 10 },
-	// 				{ setNumber: 2, weight: 110, reps: 8 },
-	// 				{ setNumber: 3, weight: 100, reps: 6 }
-	// 			]
-	// 		},
-	// 		{
-	// 			exerciseId: 3,
-	// 			sets: [
-	// 				{ setNumber: 1, weight: 35, reps: 10 },
-	// 				{ setNumber: 2, weight: 35, reps: 10 },
-	// 				{ setNumber: 3, weight: 30, reps: 8 }
-	// 			]
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	dayNumber: 5,
-	// 	date: '2025-08-05',
-	// 	exercises: [
-	// 		{
-	// 			exerciseId: 2,
-	// 			sets: [
-	// 				{ setNumber: 1, reps: 15 },
-	// 				{ setNumber: 2, reps: 12 },
-	// 				{ setNumber: 3, reps: 10 }
-	// 			]
-	// 		},
-	// 		{
-	// 			exerciseId: 4,
-	// 			sets: [
-	// 				{ setNumber: 1, weight: 70, reps: 10 },
-	// 				{ setNumber: 2, weight: 70, reps: 8 }
-	// 			]
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	dayNumber: 6,
-	// 	date: '2025-08-06',
-	// 	exercises: [
-	// 		{
-	// 			exerciseId: 12,
-	// 			sets: [
-	// 				{ setNumber: 1, weight: 120, reps: 5 },
-	// 				{ setNumber: 2, weight: 120, reps: 5 },
-	// 				{ setNumber: 3, weight: 120, reps: 5 }
-	// 			]
-	// 		}
-	// 	]
-	// }
-
 ]);
 
 export const Exerciseslist = writable<GlobalExerciselist>({
@@ -289,32 +196,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 				exercises: [
 					//set exercise:{} to exerciseId:number
 					{
-						exercise: {
-							id: 1,
-							name: 'Barbell Bench Press',
-							exerciseGif: 'benchGifString',
-							explanation: 'Classic chest compound exercise.',
-							muscleGroups: new Set(['chest', 'triceps', 'front delts']),
-							exeerciseHistoryId: 1,
-							exerciseHistory: {
-								exerciseId: 1,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 1,
-										setNumber: 1,
-										weight: 100,
-										reps: 10,
-										wrapsUsed: false,
-										strapsUsed: false,
-										sleevesUsed: true,
-										rpe: 8,
-										extraNote: 'Felt solid, good control'
-									}
-								]
-							}
-						},
+						exerciseId: 1,
 						sets: [
 							{ setNumber: 1, reps: 12, weight: 100 },
 							{ setNumber: 2, reps: 10, weight: 100 },
@@ -323,32 +205,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 						]
 					},
 					{
-						exercise: {
-							id: 2,
-							name: 'Incline Dumbbell Press',
-							exerciseGif: 'inclineDumbbellGif',
-							explanation: 'Targets upper chest with more stretch.',
-							muscleGroups: new Set(['upper chest', 'front delts']),
-							exerciseHistoryId: 2,
-							exerciseHistory: {
-								exerciseId: 2,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 2,
-										setNumber: 1,
-										weight: 30,
-										reps: 10,
-										wrapsUsed: false,
-										strapsUsed: false,
-										sleevesUsed: false,
-										rpe: 7,
-										extraNote: 'Could go heavier'
-									}
-								]
-							}
-						},
+						exerciseId: 2,
 						sets: [
 							{ setNumber: 1, reps: 10 },
 							{ setNumber: 2, reps: 10 },
@@ -362,32 +219,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 				label: 'Back Strength',
 				exercises: [
 					{
-						exercise: {
-							id: 3,
-							name: 'Seated Cable Row',
-							exerciseGif: 'seatedRowGifString',
-							explanation: 'Mid-back thickness builder.',
-							muscleGroups: new Set(['lats', 'rhomboids', 'biceps']),
-							exerciseHistoryId: 3,
-							exerciseHistory: {
-								exerciseId: 3,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 3,
-										setNumber: 1,
-										weight: 60,
-										reps: 12,
-										wrapsUsed: false,
-										strapsUsed: true,
-										sleevesUsed: false,
-										rpe: 8,
-										extraNote: 'Back felt pumped'
-									}
-								]
-							}
-						},
+						exerciseId: 3,
 						sets: [
 							{ setNumber: 1, reps: 12 },
 							{ setNumber: 2, reps: 10 },
@@ -395,32 +227,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 						]
 					},
 					{
-						exercise: {
-							id: 4,
-							name: 'Lat Pulldown',
-							exerciseGif: 'latPulldownGif',
-							explanation: 'Vertical pulling motion for lats.',
-							muscleGroups: new Set(['lats', 'biceps']),
-							exerciseHistoryId: 4,
-							exerciseHistory: {
-								exerciseId: 4,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 4,
-										setNumber: 1,
-										weight: 50,
-										reps: 10,
-										wrapsUsed: false,
-										strapsUsed: false,
-										sleevesUsed: false,
-										rpe: 7,
-										extraNote: ''
-									}
-								]
-							}
-						},
+						exerciseId: 4,
 						sets: [
 							{ setNumber: 1, reps: 10 },
 							{ setNumber: 2, reps: 10 },

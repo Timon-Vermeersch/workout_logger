@@ -3,6 +3,8 @@
   import { writable } from 'svelte/store';
   import { completedProgramDaysHistory } from '$lib/stores/data_store';
 
+
+
   const selectedExerciseId = writable<number | null>(null);
     function getExerciseName(id: number): string {
   return $Exerciseslist.exercises.find(e => e.id === id)?.name ?? `Exercise ${id}`;
