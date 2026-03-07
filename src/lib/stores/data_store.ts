@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import type { builtProgram } from '$lib/interfaces/builtProgram';
 import type { GlobalExerciselist } from '$lib/interfaces/global-exercise-list';
 import type { ProgramDay } from '$lib/interfaces/programDay';
-import type { equipment, muscleGroupTypes } from '../interfaces/exercise';
+import type { EquipmentTypes, muscleGroupTypes } from '../interfaces/exercise';
 import type { ActiveProgramRef } from '$lib/interfaces/activeProgramRef';
 import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
 import type { DayHistory } from '$lib/interfaces/dayHistory';
@@ -91,29 +91,8 @@ export const exerciseHistory = writable<ExerciseHistory[]>([
 			}
 		]
 	},
-	{
-		exerciseId: 12, // Barbell Squat
-		historyArray: [
-			{
-				date: '2025-08-03',
-				sets: [
-					{ setNumber: 1, weight: 100, reps: 5 },
-					{ setNumber: 2, weight: 100, reps: 5 },
-					{ setNumber: 3, weight: 100, reps: 5 }
-				]
-			},
-			{
-				date: '2025-08-06',
-				sets: [
-					{ setNumber: 1, weight: 120, reps: 5 },
-					{ setNumber: 2, weight: 120, reps: 5 },
-					{ setNumber: 3, weight: 120, reps: 5 }
-				]
-			}
-		]
-	}
 ]);
-
+//filled when clicked ->flushed to history (persistent)
 export const completedProgramDaysHistory = writable<DayHistory[]>([
 	{
 		dayNumber: 1,
@@ -138,7 +117,7 @@ export const completedProgramDaysHistory = writable<DayHistory[]>([
 		]
 	},
 ]);
-
+//Exerciseslist (persistent)
 export const Exerciseslist = writable<GlobalExerciselist>({
 	exercises: [
 		{
@@ -147,44 +126,44 @@ export const Exerciseslist = writable<GlobalExerciselist>({
 			explanation: 'just bench BRO',
 			exerciseGif: '/gifs/rat.gif',
 			muscleGroups: new Set<muscleGroupTypes>(['chest', 'triceps']),
-			equipmentUsed: new Set<Equipment>(['barbell' as Equipment, 'smith machine '])
+			equipmentUsed: new Set<EquipmentTypes>(['barbell'as EquipmentTypes , 'smith machine'as EquipmentTypes])
 		},
 		{
 			id: 2,
 			name: 'Pull-Ups',
 			explanation: 'bodyweight back builder',
 			muscleGroups: new Set<muscleGroupTypes>(['back', 'biceps']),
-			equipmentUsed: new Set<Equipment>(['pull-up bar' as Equipment])
+			equipmentUsed: new Set<EquipmentTypes>(['pull-up bar' as EquipmentTypes])
 		},
 		{
 			id: 3,
 			name: 'Incline Dumbbell Press',
 			explanation: 'upper chest focus',
 			muscleGroups: new Set<muscleGroupTypes>(['chest', 'triceps']),
-			equipmentUsed: new Set<Equipment>(['dumbbells' as Equipment])
+			equipmentUsed: new Set<EquipmentTypes>(['dumbbells'])
 		},
 		{
 			id: 4,
 			name: 'Barbell Row',
 			explanation: 'targets lats and traps',
 			muscleGroups: new Set<muscleGroupTypes>(['back', 'biceps']),
-			equipmentUsed: new Set<Equipment>(['barbell' as Equipment])
+			equipmentUsed: new Set<EquipmentTypes>(['barbell'])
 		},
 		{
 			id: 5,
 			name: 'Triceps Pushdown',
 			explanation: 'pump those horseshoes',
 			muscleGroups: new Set<muscleGroupTypes>(['triceps']),
-			equipmentUsed: new Set<Equipment>(['cable machine' as Equipment])
+			equipmentUsed: new Set<EquipmentTypes>(['cable machine'])
 		}
 	]
 });
-
+//personalProgram gets populated when the currentActiveBuiltProgram get loaded and this is this initialization (persistent?)
 export const personalProgram = writable<ProgramDay>({
 	dayNumber: 1,
 	exercises: []
 });
-
+//builtPrograms is your actual book containing all your programs (persistent)
 export const builtPrograms = writable<Array<builtProgram>>([
 	// this obj is 1 selectedTobuild
 	{
@@ -239,174 +218,65 @@ export const builtPrograms = writable<Array<builtProgram>>([
 		]
 	},
 	{
-		name: 'Nsuns-2-program',
-		days: [
-			{
-				dayNumber: 1,
-				label: 'Back day Strength',
-				exercises: [
-					{
-						exercise: {
-							id: 2021,
-							name: 'Deadlift',
-							exerciseGif: 'exerciseGifString',
-							explanation: 'explanationString',
-							muscleGroups: new Set(['chest']),
-							exerciseHistoryId: 1,
-							exerciseHistory: {
-								exerciseId: 1,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 1,
-										setNumber: 1,
-										weight: 100,
-										reps: 10,
-										wrapsUsed: false,
-										strapsUsed: false,
-										sleevesUsed: true,
-										rpe: 8,
-										extraNote: 'Felt solid'
-									}
-								]
-							}
-						},
-						sets: [
-							{ setNumber: 1, reps: 12 },
-							{ setNumber: 2, reps: 10 },
-							{ setNumber: 3, reps: 8 },
-							{ setNumber: 4, reps: 6 }
-						]
-					}
-				]
-			}
-		]
+	name: 'Nsuns2',
+	days: [
+		{
+			dayNumber: 1,
+			label: 'Push Strength',
+			exercises: [
+				{
+					exerciseId: 1, // Flat Bench Press
+					sets: [
+						{ setNumber: 1, reps: 8, weight: 105 },
+						{ setNumber: 2, reps: 6, weight: 105 },
+						{ setNumber: 3, reps: 5, weight: 105 },
+						{ setNumber: 4, reps: 4, weight: 105 }
+					]
+				},
+				{
+					exerciseId: 3, // Incline Dumbbell Press
+					sets: [
+						{ setNumber: 1, reps: 10, weight: 32 },
+						{ setNumber: 2, reps: 10, weight: 32 },
+						{ setNumber: 3, reps: 8, weight: 32 }
+					]
+				},
+				{
+					exerciseId: 5, // Triceps Pushdown
+					sets: [
+						{ setNumber: 1, reps: 12 },
+						{ setNumber: 2, reps: 12 },
+						{ setNumber: 3, reps: 10 }
+					]
+				}
+			]
+		},
+		{
+			dayNumber: 2,
+			label: 'Pull Strength',
+			exercises: [
+				{
+					exerciseId: 2, // Pull Ups
+					sets: [
+						{ setNumber: 1, reps: 10 },
+						{ setNumber: 2, reps: 8 },
+						{ setNumber: 3, reps: 8 }
+					]
+				},
+				{
+					exerciseId: 4, // Barbell Row
+					sets: [
+						{ setNumber: 1, reps: 10, weight: 70 },
+						{ setNumber: 2, reps: 10, weight: 70 },
+						{ setNumber: 3, reps: 8, weight: 70 }
+					]
+				}
+			]
+		}
+	]
 	},
-	{
-		name: 'Push-Pull-Legs Vol.1',
-		days: [
-			{
-				dayNumber: 1,
-				label: 'Push Day',
-				exercises: [
-					{
-						exercise: {
-							id: 10,
-							name: 'Overhead Press',
-							exerciseGif: 'ohpGif',
-							explanation: 'Builds shoulder and triceps strength.',
-							muscleGroups: new Set(['shoulders', 'triceps']),
-							exerciseHistoryId: 10,
-							exerciseHistory: {
-								exerciseId: 10,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 10,
-										setNumber: 1,
-										weight: 40,
-										reps: 8,
-										wrapsUsed: false,
-										strapsUsed: false,
-										sleevesUsed: false,
-										rpe: 8,
-										extraNote: ''
-									}
-								]
-							}
-						},
-						sets: [
-							{ setNumber: 1, reps: 8 },
-							{ setNumber: 2, reps: 6 },
-							{ setNumber: 3, reps: 6 }
-						]
-					}
-				]
-			},
-			{
-				dayNumber: 2,
-				label: 'Pull Day',
-				exercises: [
-					{
-						exercise: {
-							id: 11,
-							name: 'Barbell Row',
-							exerciseGif: 'rowGif',
-							explanation: 'Compound lift for back thickness.',
-							muscleGroups: new Set(['lats', 'rear delts', 'biceps']),
-							exerciseHistoryId: 11,
-							exerciseHistory: {
-								exerciseId: 11,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 11,
-										setNumber: 1,
-										weight: 70,
-										reps: 10,
-										wrapsUsed: false,
-										strapsUsed: true,
-										sleevesUsed: false,
-										rpe: 7,
-										extraNote: 'Grip slipped on 3rd set'
-									}
-								]
-							}
-						},
-						sets: [
-							{ setNumber: 1, reps: 10 },
-							{ setNumber: 2, reps: 8 },
-							{ setNumber: 3, reps: 8 }
-						]
-					}
-				]
-			},
-			{
-				dayNumber: 3,
-				label: 'Leg Day',
-				exercises: [
-					{
-						exercise: {
-							id: 12,
-							name: 'Barbell Squat',
-							exerciseGif: 'squatGif',
-							explanation: 'Full body compound; focus on quads and glutes.',
-							muscleGroups: new Set(['quads', 'glutes', 'core']),
-							exerciseHistoryId: 12,
-							exerciseHistory: {
-								exerciseId: 12,
-								date: new Date(),
-								sets: [
-									{
-										id: 1,
-										exerciseHistoryId: 12,
-										setNumber: 1,
-										weight: 100,
-										reps: 5,
-										wrapsUsed: true,
-										strapsUsed: false,
-										sleevesUsed: true,
-										rpe: 9,
-										extraNote: 'Heavy but clean form'
-									}
-								]
-							}
-						},
-						sets: [
-							{ setNumber: 1, reps: 5 },
-							{ setNumber: 2, reps: 5 },
-							{ setNumber: 3, reps: 5 }
-						]
-					}
-				]
-			}
-		]
-	}
 ]);
-
+//CurrentActiveBuiltProgram is just a setting of which builtprogram to display and to work with (probably not persistent but a setting thing?)
 export const CurrentActiveBuiltProgram = writable<ActiveProgramRef>({
 	name: 'Nsuns1',
 	currentDay: 1,

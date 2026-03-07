@@ -13,7 +13,7 @@
 		exerciseHistory,
 		completedProgramDaysHistory
 	} from '../../lib/stores/data_store';
-	import type { Exercise } from './../../lib/interfaces/exercise'
+	import type { Exercise } from './../../lib/interfaces/exercise';
 	import type { PlannedExercise } from '$lib/interfaces/plannedExercise';
 	import { onMount } from 'svelte';
 	import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
@@ -64,7 +64,7 @@
 			personalProgram.update((program) => {
 				const copyProgram = { ...program };
 				const currentPlannedExercise = copyProgram.exercises[selectedExerciseIndex];
-				console.log(currentPlannedExercise)
+				console.log(currentPlannedExercise);
 				currentPlannedExercise.exerciseId = selectedSwapExercise;
 				currentPlannedExercise.sets = [];
 				return copyProgram;
@@ -104,64 +104,65 @@
 		});
 	}
 
-	function flushSessionToHistory() {
-		// const today = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD
-		const today = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
-		const program = $personalProgram;
+	// function flushSessionToHistory() {
+	// 	// const today = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD
+	// 	const today = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
+	// 	const program = $personalProgram;
 
-		// 1. Push to completedProgramDays
-		completedProgramDaysHistory.update((days) => {
-			return [
-				...days,
-				{
-					dayNumber: days.length + 1,
-					date: today,
-					exercises: program.exercises.map((pe) => ({
-						exerciseId: pe.exercise.id,
-						sets: pe.sets
-					}))
-				}
-			];
-		});
+	// 	// 1. Push to completedProgramDays
+	// 	completedProgramDaysHistory.update((days) => {
+	// 		return [
+	// 			...days,
+	// 			{
+	// 				dayNumber: days.length + 1,
+	// 				date: today,
+	// 				exercises: program.exercises.map((pe) => ({
+	// 					exerciseId: pe.exercise.id,
+	// 					sets: pe.sets
+	// 				}))
+	// 			}
+	// 		];
+	// 	});
 
-		// 2. Push to exerciseHistory (append by exerciseId)
-		exerciseHistory.update((history) => {
-			const updated = [...history];
+	// 	// 2. Push to exerciseHistory (append by exerciseId)
+	// 	exerciseHistory.update((history) => {
+	// 		const updated = [...history];
 
-			for (const pe of program.exercises) {
-				const existing = updated.find((h) => h.exerciseId === pe.exercise.id);
-				const entry = {
-					date: today,
-					sets: pe.sets
-				};
+	// 		for (const pe of program.exercises) {
+	// 			const existing = updated.find((h) => h.exerciseId === pe.exerciseId);
+	// 			const entry = {
+	// 				date: today,
+	// 				sets: pe.sets
+	// 			};
 
-				if (existing) {
-					existing.historyArray.push(entry);
-				} else {
-					updated.push({
-						exerciseId: pe.exercise.id,
-						historyArray: [entry]
-					});
-				}
-			}
+	// 			if (existing) {
+	// 				existing.historyArray.push(entry);
+	// 			} else {
+	// 				updated.push({
+	// 					exerciseId: pe.exerciseId,
+	// 					historyArray: [entry]
+	// 				});
+	// 			}
+	// 		}
 
-			return updated;
-		});
+	// 		return updated;
+	// 	});
 
-		// 3. Optionally clear the sets
-		personalProgram.update((p) => {
-			const cleared = { ...p };
-			cleared.exercises = cleared.exercises.map((ex) => ({
-				...ex,
-				sets: []
-			}));
-			return cleared;
-		});
-	}
+	// 	// 3. Optionally clear the sets
+	// 	personalProgram.update((p) => {
+	// 		const cleared = { ...p };
+	// 		cleared.exercises = cleared.exercises.map((ex) => ({
+	// 			...ex,
+	// 			sets: []
+	// 		}));
+	// 		return cleared;
+	// 	});
+	// }
+
 	//FlushWithUIchange
 	function goToNextDay() {
 		// flushSessionToHistory();
-		goToNextDayTest()
+		goToNextDayTest();
 		CurrentActiveBuiltProgram.update((program) => {
 			const nextDay = program.currentDay + 1;
 			const wrappedDay = nextDay > program.daysAmount ? 1 : nextDay;
@@ -173,24 +174,25 @@
 
 	//FlushWithoutUIchange
 	function goToNextDayTest() {
-		
 		// from programDay
 		let justToday = $personalProgram;
 		// to dayHistory
-		// let HistoryDestination = $completedProgramDaysHistory 
-		
+		// let HistoryDestination = $completedProgramDaysHistory
+
 		const today = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
-		let tempDayToFillAndPush:DayHistory = {dayNumber: justToday.dayNumber , date: today, exercises: justToday.exercises.map(e=> ({
-			exerciseId: e.exerciseId,
-			sets: [...e.sets]
-		})) 
-	}
-		
-		console.log("pre" , $completedProgramDaysHistory )
-		$completedProgramDaysHistory = [...$completedProgramDaysHistory, tempDayToFillAndPush ]
+		let tempDayToFillAndPush: DayHistory = {
+			dayNumber: justToday.dayNumber,
+			date: today,
+			exercises: justToday.exercises.map((e) => ({
+				exerciseId: e.exerciseId,
+				sets: [...e.sets]
+			}))
+		};
 
-		console.log("Post" , $completedProgramDaysHistory )
+		console.log('pre', $completedProgramDaysHistory);
+		$completedProgramDaysHistory = [...$completedProgramDaysHistory, tempDayToFillAndPush];
 
+		console.log('Post', $completedProgramDaysHistory);
 	}
 	//structuredClone($exerciseHistory)?
 	//temphistory = actualhistrory
@@ -215,11 +217,11 @@
 		<!-- start -->
 		<div class="bg flex min-h-dvh flex-auto flex-col space-y-4">
 			{#each $personalProgram.exercises as plannedExercise, index}
-			{@const exercise = lookupExerciseById(plannedExercise.exerciseId)}
+				{@const exercise = lookupExerciseById(plannedExercise.exerciseId)}
 				<div class="rounded-lg border border-gray-700 bg-gray-800 p-4 shadow">
 					<div class="mb-2 grid grid-cols-2">
 						<h2 class="Title flex flex-col flex-wrap font-semibold text-white">
-							{index + 1}: {exercise.name || "Unknown exercise"}
+							{index + 1}: {exercise.name || 'Unknown exercise'}
 							<div class="mb-1 text-xs text-gray-400">4 Sets : 12 Reps</div>
 						</h2>
 
@@ -324,8 +326,7 @@
 			{#each $Exerciseslist.exercises as exercise}
 				<button
 					class={`block w-full rounded p-3 ${selectedSwapExercise === exercise.id ? 'bg-green-600' : 'bg-gray-600'} hover:bg-gray-500`}
-					on:click={() => (selectedSwapExercise = exercise.id )}
-					
+					on:click={() => (selectedSwapExercise = exercise.id)}
 				>
 					{exercise.name}
 				</button>
