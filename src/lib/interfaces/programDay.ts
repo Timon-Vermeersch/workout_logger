@@ -1,5 +1,5 @@
 import type { PlannedExercise } from './plannedExercise';
-
+//ProgramDay = workout template
 export interface ProgramDay {
 	dayNumber: number; // you do not have to have 7 days (week) you can put 10 days in a week if you want
 	label?: string;

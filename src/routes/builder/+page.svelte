@@ -11,6 +11,8 @@
 	import type { Exercise } from '$lib/interfaces/exercise';
   import type {SwipeDetail} from '../../lib/interfaces/swipeDetail'
 
+  import { lookupExerciseById } from '$lib/utils/exercise-selector';
+
   import Dialog from '../../lib/components/dialog.svelte';
   import CollapsibleSection from '$lib/components/CollapsibleSection.svelte';
   import more from '../../lib/svg/more.svg';
@@ -237,7 +239,7 @@ setBuildTemp();
 <!-- title -->
 <div class='div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
   <div class='flex justify-center hover:bg-gray-700 rounded-4xl'>
-      <button on:click={setActiveProgram(selectedToBuild)}>
+      <button on:click={() => setActiveProgram(selectedToBuild)}>
         Set as Current!
       </button>
   </div>
@@ -265,11 +267,15 @@ setBuildTemp();
                   data-day-index={dayIndex}>
                   <CollapsibleSection headerText={`${day.dayNumber}. ${day.label}`}>
                       <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
+                      
                         {#if day.exercises.length > 0}
-                          {#each day.exercises as { exercise, sets }, exerciseIndex}
+                          {#each day.exercises as { exerciseId, sets }, exerciseIndex}
+                          {@const exercise = lookupExerciseById(exerciseId)}
                               <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
                                 <div class="grid grid-cols-2 text-md font-bold text-white mb-1">
-                                  <div class="flex justify-center items-center">{exercise.name}</div>
+                                  <div class="flex justify-center items-center">
+                                    {exercise?.name ?? 'Unknown exercise'}
+                                  </div>
 
                                     <div class= 'flex gap-4 justify-center'>
 

@@ -3,52 +3,58 @@
 	import { onMount } from 'svelte';
 	import PageHeader from '../lib/structure/pageheader.svelte';
 	import { Toaster } from 'svelte-5-french-toast';
-  
+	import { completedProgramDaysHistory } from '../lib/stores/data_store';
+
 	let { children } = $props();
 	let { isMobile, type, ready } = $state({
-	  isMobile: false,
-	  type: 'desktop',
-	  ready: false
+		isMobile: false,
+		type: 'desktop',
+		ready: false
 	});
-  
+
 	const updateMobileStatus = () => {
-	  isMobile = window.innerWidth <= 932;
-	  type = isMobile ? 'mobile' : 'desktop';
+		isMobile = window.innerWidth <= 932;
+		type = isMobile ? 'mobile' : 'desktop';
 	};
 
 	onMount(() => {
-	  updateMobileStatus();
-	  ready = true;
-	  window.addEventListener('resize', updateMobileStatus);
-  
-	  return () => {
-		window.removeEventListener('resize', updateMobileStatus);
-	  };
+		// if ('serviceWorker' in navigator) {
+		// 	navigator.serviceWorker.register('/service-worker.js');
+		// }
+		completedProgramDaysHistory.init();
+		// (window as any).completedProgramDaysHistory = completedProgramDaysHistory;	  updateMobileStatus();
+
+		// completedProgramDaysHistory.update(v => {
+		// 	v.push({
+		// 		dayNumber: 99,
+		// 		date: "2026-01-01",
+		// 		exercises: []
+		// 	});
+		// 	return v;
+		// });
+		ready = true;
+		window.addEventListener('resize', updateMobileStatus);
+
+		return () => {
+			window.removeEventListener('resize', updateMobileStatus);
+		};
 	});
-  </script>
+</script>
 
-
-
-  <!-- Ready ? loadMobile : Loaddesktop -->
-  <Toaster />
-  {#if !ready}
-	<div class="flex items-center justify-center min-h-screen">
-	  <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-gray-500"></div>
+<!-- Ready ? loadMobile : Loaddesktop -->
+<Toaster />
+{#if !ready}
+	<div class="flex min-h-screen items-center justify-center">
+		<div class="h-8 w-8 animate-spin rounded-full border-t-2 border-gray-500"></div>
 	</div>
-  {:else}
-	{#if isMobile}
-	<div class='flex flex-col h-dvh'>
+{:else if isMobile}
+	<div class="flex h-dvh flex-col">
 		<div class="flex-1 overflow-auto">
 			{@render children()}
 		</div>
-			<PageHeader {type}/>
+		<PageHeader {type} />
 	</div>
-	{:else}
-	  <PageHeader {type}/>
-	  {@render children()}
-	{/if}
-	
-
-
-  {/if}
-  
+{:else}
+	<PageHeader {type} />
+	{@render children()}
+{/if}
