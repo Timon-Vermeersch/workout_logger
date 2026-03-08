@@ -7,6 +7,8 @@ import type { ActiveProgramRef } from '$lib/interfaces/activeProgramRef';
 import type { ExerciseHistory } from '$lib/interfaces/exerciseHistory';
 import type { DayHistory } from '$lib/interfaces/dayHistory';
 
+import { persistedWritable } from "../IndexedDB/persistedWritable";
+
 //derived<completedProgramDaysHistory>?
 export const exerciseHistory = writable<ExerciseHistory[]>([
 	{
@@ -93,30 +95,61 @@ export const exerciseHistory = writable<ExerciseHistory[]>([
 	},
 ]);
 //filled when clicked ->flushed to history (persistent)
-export const completedProgramDaysHistory = writable<DayHistory[]>([
-	{
-		dayNumber: 1,
-		date: '2025-08-01',
-		exercises: [
-			{
-				exerciseId: 1,
-				sets: [
-					{ setNumber: 1, weight: 100, reps: 10 },
-					{ setNumber: 2, weight: 100, reps: 8 },
-					{ setNumber: 3, weight: 90, reps: 6 }
-				]
-			},
-			{
-				exerciseId: 3,
-				sets: [
-					{ setNumber: 1, weight: 30, reps: 10 },
-					{ setNumber: 2, weight: 30, reps: 10 },
-					{ setNumber: 3, weight: 25, reps: 8 }
-				]
-			}
-		]
-	},
-]);
+
+// export const completedProgramDaysHistory = writable<DayHistory[]>([
+// 	{
+// 		dayNumber: 1,
+// 		date: '2025-08-01',
+// 		exercises: [
+// 			{
+// 				exerciseId: 1,
+// 				sets: [
+// 					{ setNumber: 1, weight: 100, reps: 10 },
+// 					{ setNumber: 2, weight: 100, reps: 8 },
+// 					{ setNumber: 3, weight: 90, reps: 6 }
+// 				]
+// 			},
+// 			{
+// 				exerciseId: 3,
+// 				sets: [
+// 					{ setNumber: 1, weight: 30, reps: 10 },
+// 					{ setNumber: 2, weight: 30, reps: 10 },
+// 					{ setNumber: 3, weight: 25, reps: 8 }
+// 				]
+// 			}
+// 		]
+// 	},
+// ]);
+
+export const completedProgramDaysHistory = persistedWritable<DayHistory[]>(
+	'completedProgramDaysHistory',
+	[
+		{
+			dayNumber: 1,
+			date: '01-05-1998',
+			exercises: [
+				{
+					exerciseId: 1,
+					sets: [
+						{ setNumber: 1, weight: 100, reps: 10 },
+						{ setNumber: 2, weight: 100, reps: 8 },
+						{ setNumber: 3, weight: 90, reps: 6 }
+					]
+				},
+				{
+					exerciseId: 3,
+					sets: [
+						{ setNumber: 1, weight: 30, reps: 10 },
+						{ setNumber: 2, weight: 30, reps: 10 },
+						{ setNumber: 3, weight: 25, reps: 8 }
+					]
+				}
+			]
+		}
+	]
+);
+
+
 //Exerciseslist (persistent)
 export const Exerciseslist = writable<GlobalExerciselist>({
 	exercises: [

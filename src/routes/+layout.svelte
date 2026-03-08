@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import PageHeader from '../lib/structure/pageheader.svelte';
 	import { Toaster } from 'svelte-5-french-toast';
+	import { completedProgramDaysHistory } from '../lib/stores/data_store';
   
 	let { children } = $props();
 	let { isMobile, type, ready } = $state({
@@ -17,7 +18,17 @@
 	};
 
 	onMount(() => {
-	  updateMobileStatus();
+		completedProgramDaysHistory.init();
+// (window as any).completedProgramDaysHistory = completedProgramDaysHistory;	  updateMobileStatus();
+
+// completedProgramDaysHistory.update(v => {
+// 	v.push({
+// 		dayNumber: 99,
+// 		date: "2026-01-01",
+// 		exercises: []
+// 	});
+// 	return v;
+// });
 	  ready = true;
 	  window.addEventListener('resize', updateMobileStatus);
   
