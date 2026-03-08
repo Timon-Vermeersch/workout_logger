@@ -10,9 +10,12 @@ export default defineConfig({
 		tailwindcss(),
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
+			workbox:{
+				navigateFallback: '/session'
+			},
 			manifest: {
-				name: 'Workout Logger',
-				short_name: 'Workout',
+				name: 'Better Workout Logger',
+				short_name: 'BWL',
 				start_url: '/',
 				scope: '/',
 				display: 'standalone',
