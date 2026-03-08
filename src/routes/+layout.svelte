@@ -18,9 +18,9 @@
 	};
 
 	onMount(() => {
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.js');
-		}
+		// if ('serviceWorker' in navigator) {
+		// 	navigator.serviceWorker.register('/service-worker.js');
+		// }
 		completedProgramDaysHistory.init();
 		// (window as any).completedProgramDaysHistory = completedProgramDaysHistory;	  updateMobileStatus();
 
