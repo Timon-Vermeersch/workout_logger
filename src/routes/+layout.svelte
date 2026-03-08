@@ -4,6 +4,9 @@
 	import PageHeader from '../lib/structure/pageheader.svelte';
 	import { Toaster } from 'svelte-5-french-toast';
 	import { completedProgramDaysHistory } from '../lib/stores/data_store';
+	import { pwaInfo } from 'virtual:pwa-info';
+
+	let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
 
 	let { children } = $props();
 	let { isMobile, type, ready } = $state({
@@ -17,28 +20,45 @@
 		type = isMobile ? 'mobile' : 'desktop';
 	};
 
-	onMount(() => {
-		// if ('serviceWorker' in navigator) {
-		// 	navigator.serviceWorker.register('/service-worker.js');
-		// }
-		completedProgramDaysHistory.init();
-		// (window as any).completedProgramDaysHistory = completedProgramDaysHistory;	  updateMobileStatus();
+let deferredPrompt: any = null;
+let canInstall = $state(false);
 
-		// completedProgramDaysHistory.update(v => {
-		// 	v.push({
-		// 		dayNumber: 99,
-		// 		date: "2026-01-01",
-		// 		exercises: []
-		// 	});
-		// 	return v;
-		// });
-		ready = true;
-		window.addEventListener('resize', updateMobileStatus);
+onMount(() => {
+	const onBeforeInstallPrompt = (e: Event) => {
+		e.preventDefault();
+		deferredPrompt = e;
+		canInstall = true;
+	};
 
-		return () => {
-			window.removeEventListener('resize', updateMobileStatus);
-		};
-	});
+	const onAppInstalled = () => {
+		deferredPrompt = null;
+		canInstall = false;
+	};
+
+	window.addEventListener('beforeinstallprompt', onBeforeInstallPrompt);
+	window.addEventListener('appinstalled', onAppInstalled);
+
+	completedProgramDaysHistory.init();
+	updateMobileStatus();
+
+	ready = true;
+	window.addEventListener('resize', updateMobileStatus);
+
+	return () => {
+		window.removeEventListener('resize', updateMobileStatus);
+		window.removeEventListener('beforeinstallprompt', onBeforeInstallPrompt);
+		window.removeEventListener('appinstalled', onAppInstalled);
+	};
+});
+	async function installApp() {
+		if (!deferredPrompt) return;
+
+		await deferredPrompt.prompt();
+		await deferredPrompt.userChoice;
+
+		deferredPrompt = null;
+		canInstall = false;
+	}
 </script>
 
 <!-- Ready ? loadMobile : Loaddesktop -->
@@ -58,3 +78,13 @@
 	<PageHeader {type} />
 	{@render children()}
 {/if}
+
+{#if canInstall}
+	<button onclick={installApp}>
+		Install app
+	</button>
+{/if}
+
+<svelte:head>
+	{@html webManifestLink}
+</svelte:head>
