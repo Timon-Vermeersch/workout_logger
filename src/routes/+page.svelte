@@ -1,5 +1,5 @@
 <script>
-    export const prerender = true;
+    // export const prerender = true;
 </script>
 
 <div class="min-h-[calc(100vh-64px)] bg-sky-950">
