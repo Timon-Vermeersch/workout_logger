@@ -20,7 +20,7 @@
 		<a href="/history">
 			<div
 				class="flex h-9 w-9 flex-col items-center justify-center rounded-xl border-2 transition-transform duration-300 hover:scale-110"
-				class:bg-blue-300={page.url.pathname === '/nutrition'}
+				class:bg-blue-300={page.url.pathname === '/history'}
 			>
 				<img src={fire} alt="Nutrition" />
 				<span class="text-md absolute bottom-[-3px] text-center font-medium"></span>
@@ -58,7 +58,7 @@
 		<a href="/exerciseList">
 			<div
 				class="flex h-9 w-9 items-center justify-center rounded-xl border-2 transition-transform duration-300 hover:scale-110"
-				class:bg-blue-300={page.url.pathname === '/diavoorstellingxd'}
+				class:bg-blue-300={page.url.pathname === '/exerciseList'}
 			>
 				<img src={graph1} alt="Graph" />
 				<span class="text-md absolute bottom-[-3px] text-center font-medium"></span>

@@ -11,7 +11,7 @@ export default defineConfig({
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			workbox:{
-				navigateFallback: '/session'
+				navigateFallback: '/'
 			},
 			manifest: {
 				name: 'Better Workout Logger',

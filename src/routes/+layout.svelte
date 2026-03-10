@@ -63,6 +63,13 @@ onMount(() => {
 
 <!-- Ready ? loadMobile : Loaddesktop -->
 <Toaster />
+{#if canInstall}
+<div class='flex flex-col align-center justify-center'>
+	<button onclick={installApp}>
+		Install app
+	</button>
+</div>
+{/if}
 {#if !ready}
 	<div class="flex min-h-screen items-center justify-center">
 		<div class="h-8 w-8 animate-spin rounded-full border-t-2 border-gray-500"></div>
@@ -79,12 +86,8 @@ onMount(() => {
 	{@render children()}
 {/if}
 
-{#if canInstall}
-	<button onclick={installApp}>
-		Install app
-	</button>
-{/if}
 
-<svelte:head>
+
+<!-- <svelte:head>
 	{@html webManifestLink}
-</svelte:head>
+</svelte:head> -->
