@@ -29,6 +29,16 @@
 	let currentActiveBuiltProgramDayNumber: number | null;
 	let currentDayLabel: string | undefined;
 
+	const options: Intl.DateTimeFormatOptions = {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		timeZone: 'CET'
+	};
+
+	const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date());
+
 	onMount(() => {
 		setupDay();
 	});
@@ -48,6 +58,18 @@
 
 		currentDayLabel = day.label;
 		personalProgram.set({ ...day });
+	}
+
+	function populatePreviousForExercise(plannedExercise, history) {
+		const latestLoggedExercise = [...history]
+			.reverse()
+			.flatMap((day) => day.exercises)
+			.find((exercise) => exercise.exerciseId === plannedExercise.exerciseId);
+
+		plannedExercise.sets.forEach((set, index) => {
+			const previousSet = latestLoggedExercise?.sets[index];
+			set.previous = previousSet ? `${previousSet.weight} x ${previousSet.reps}` : '';
+		});
 	}
 
 	function knop() {
@@ -75,16 +97,6 @@
 		}
 	}
 
-	const options: Intl.DateTimeFormatOptions = {
-		weekday: 'long',
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-		timeZone: 'CET'
-	};
-
-	const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date());
-
 	function addSet(index: number): void {
 		personalProgram.update((program) => {
 			const copyProgram = { ...program };
@@ -103,61 +115,6 @@
 			return copyProgram;
 		});
 	}
-
-	// function flushSessionToHistory() {
-	// 	// const today = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD
-	// 	const today = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
-	// 	const program = $personalProgram;
-
-	// 	// 1. Push to completedProgramDays
-	// 	completedProgramDaysHistory.update((days) => {
-	// 		return [
-	// 			...days,
-	// 			{
-	// 				dayNumber: days.length + 1,
-	// 				date: today,
-	// 				exercises: program.exercises.map((pe) => ({
-	// 					exerciseId: pe.exercise.id,
-	// 					sets: pe.sets
-	// 				}))
-	// 			}
-	// 		];
-	// 	});
-
-	// 	// 2. Push to exerciseHistory (append by exerciseId)
-	// 	exerciseHistory.update((history) => {
-	// 		const updated = [...history];
-
-	// 		for (const pe of program.exercises) {
-	// 			const existing = updated.find((h) => h.exerciseId === pe.exerciseId);
-	// 			const entry = {
-	// 				date: today,
-	// 				sets: pe.sets
-	// 			};
-
-	// 			if (existing) {
-	// 				existing.historyArray.push(entry);
-	// 			} else {
-	// 				updated.push({
-	// 					exerciseId: pe.exerciseId,
-	// 					historyArray: [entry]
-	// 				});
-	// 			}
-	// 		}
-
-	// 		return updated;
-	// 	});
-
-	// 	// 3. Optionally clear the sets
-	// 	personalProgram.update((p) => {
-	// 		const cleared = { ...p };
-	// 		cleared.exercises = cleared.exercises.map((ex) => ({
-	// 			...ex,
-	// 			sets: []
-	// 		}));
-	// 		return cleared;
-	// 	});
-	// }
 
 	//FlushWithUIchange
 	function goToNextDay() {
@@ -194,12 +151,7 @@
 
 		console.log('Post', $completedProgramDaysHistory);
 	}
-	//structuredClone($exerciseHistory)?
-	//temphistory = actualhistrory
-	//temphistory.update(xxxxx)
-	//actualhistrory = temphistory
-
-	//plannedExercise.exercise.name
+	
 </script>
 
 <div class="bg-gray-700">

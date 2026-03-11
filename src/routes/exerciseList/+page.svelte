@@ -4,12 +4,10 @@
   import {muscleGroups} from '../../lib/interfaces/exercise'
   import loop from '../../lib/svg/loop.svg';
   import { goto } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
   
-
-
-
   let exerciseFilterInput: string | null = null;
-
+  let showSearch = true
   const filterOptions = ['All', ...muscleGroups.map(m => m.charAt(0).toUpperCase() + m.slice(1))];
 
   function hello() {
@@ -24,51 +22,67 @@
         )
       : true
   );
+
 </script>
 
 <!-- Page -->
-<div class="sticky min-h-[100dvh] bg-gray-700">
-  <!-- Header -->
-  <div class="flex items-center justify-between bg-gray-800 text-white min-h-12 px-4 space-x-4">
-    <!-- Search Input -->
-    
-    <div class="flex-grow flex items-center bg-gray-900 px-3 py-2 rounded-lg">
-      <img src={loop} alt="Search" class="w-5 h-5 invert" />
-      <input
-        bind:value={exerciseFilterInput}
-        class="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
-        aria-label="Search"
-        autocomplete="off"
-        inputmode="search"
-        placeholder="Search"
-        type="search"
-      />
-    </div>
+<div class="BODY min-h-[calc(100vh-56px)] bg-gray-700 text-white">
 
-    <!-- Header Button -->
-    <button
-      on:click={hello}
-      class="bg-green-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded whitespace-nowrap"
-    >
-      Add Exercise
-    </button>
-  </div>
+{#if showSearch}
+	<div
+		class="sticky top-0 grid h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 border-y border-gray-700 bg-gray-800/60 px-4 text-white"
+	>
+<!-- left -->
+		<Button class="" on:click={() => (showSearch = !showSearch)}>
+			Quick
+		</Button>
+<!-- search -->
+		<div class="flex h-8 min-w-0 items-center rounded-lg border border-gray-700 bg-gray-900 px-2">
+			<img src={loop} alt="Search" class="h-4 w-4 shrink-0 opacity-80" />
+			<input
+				bind:value={exerciseFilterInput}
+				class="min-w-0 flex-1 bg-transparent px-2 text-white outline-none placeholder-gray-400"
+				aria-label="Search"
+				autocomplete="off"
+				inputmode="search"
+				placeholder="Search"
+				type="search"
+			/>
+		</div>
+<!-- right -->
+		<Button class="p-4" on:click={hello}>
+			Add Exercise
+		</Button>
+	</div>
+{:else}
+	<div
+		class="sticky top-0 flex h-12 items-center gap-2 overflow-x-auto border-y border-gray-700 bg-gray-800/60 px-4 whitespace-nowrap text-white"
+	>
+		<Button class="h-8 shrink-0" on:click={() => (showSearch = !showSearch)}>
+			Search
+		</Button>
+
+		{#each filterOptions as option}
+			<button
+				on:click={() => {
+					exerciseFilterInput = exerciseFilterInput === option ? null : option;
+				}}
+				class={`h-8 shrink-0 rounded-lg border px-4 whitespace-nowrap transition-colors ${
+					exerciseFilterInput === option || (option === 'All' && exerciseFilterInput === null)
+						? 'border-blue-400 bg-blue-500/20 text-white'
+						: 'border-gray-700 bg-gray-800 text-white hover:bg-gray-700'
+				}`}
+			>
+				{option}
+			</button>
+		{/each}
+	</div>
+{/if}
+  <!-- Header -->
+
 
   <!-- Filter Carousel -->
-  <div class="overflow-x-auto whitespace-nowrap px-4 py-2 space-x-2 flex border-y border-gray-600 bg-gray-800/50">
-    {#each filterOptions as option}
-      <button
-        on:click={() => {
-          exerciseFilterInput = exerciseFilterInput === option ? null : option;
-        }}
-        class="px-4 py-2 rounded-full border whitespace-nowrap transition-colors 
-          {(exerciseFilterInput === option || (option === 'All' && exerciseFilterInput === null)) 
-            ? 'bg-blue-500/20 text-white border-blue-400' 
-            : 'bg-gray-700 text-white border-gray-600 hover:bg-gray-600'}">
-      {option}
-    </button>
-    {/each}
-  </div>
+
 
   <!-- Exercise List -->
   <div class="text-white p-4 space-y-4">

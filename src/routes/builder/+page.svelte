@@ -43,6 +43,7 @@
 $: selectedToBuild = $builtPrograms.find(program => program.name === selectedToBuildName) || null;
 
 import { swipe, type SwipeCustomEvent } from 'svelte-gestures';
+	import Button from '$lib/components/Button.svelte';
 
 let direction:string | null;
 let target;
@@ -237,23 +238,23 @@ setBuildTemp();
 </script>
 
 <!-- title -->
-<div class='div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
+<div class=' sticky top-0 div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
   <div class='flex justify-center hover:bg-gray-700 rounded-4xl'>
       <button on:click={() => setActiveProgram(selectedToBuild)}>
-        Set as Current!
+        Set current!
       </button>
   </div>
 
-  <select bind:value={selectedToBuildName} on:change={setBuild} class="flex hover:bg-gray-700 rounded-4xl justify-center items-center bg-gray-800 text-white text-center">
+  <select bind:value={selectedToBuildName} on:change={setBuild} class="flex pr-2   hover:bg-gray-700  rounded justify-center items-center bg-gray-800 text-white text-center">
       {#each $builtPrograms as availableProgram}
           <option value="{availableProgram.name}">{availableProgram.name}</option>
       {/each}
   </select>
 
-  <button class='flex justify-center hover:bg-gray-700 rounded-4xl' on:click={() => dialog.showModal()}>Plus(+)</button>
+  <Button class='flex justify-center hover:bg-gray-700 rounded-4xl' on:click={() => dialog.showModal()}>Plus(+)</Button>
 </div>
 
-<div class="BODY min-h-[calc(100vh-56px)] text-black bg-gray-700">
+<div class="BODY min-h-[calc(100vh-56px)] bg-gray-700 text-white">
   <div class="flex flex-col flex-auto space-y-4">
       <div>
           {#if selectedToBuild}
