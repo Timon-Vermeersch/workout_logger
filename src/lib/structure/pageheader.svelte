@@ -37,7 +37,7 @@
 			</div>
 		</a>
 		<!-- middle -->
-		<a href="/start">
+		<a href="/">
 			<div
 				class="flex h-9 w-12 scale-110 items-center justify-center rounded-full border-1 bg-neutral-200 text-black shadow-lg"
 			>

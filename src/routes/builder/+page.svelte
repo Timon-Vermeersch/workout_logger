@@ -237,7 +237,7 @@ setBuildTemp();
 </script>
 
 <!-- title -->
-<div class='div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
+<div class=' sticky top-0 div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
   <div class='flex justify-center hover:bg-gray-700 rounded-4xl'>
       <button on:click={() => setActiveProgram(selectedToBuild)}>
         Set as Current!
