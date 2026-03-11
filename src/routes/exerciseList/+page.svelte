@@ -29,28 +29,28 @@
 <div class=" min-h-[100dvh] bg-gray-700">
 
  {#if showSearch}
-	<div class="sticky top-0 flex min-h-12 items-center gap-2 border-y border-gray-700 bg-gray-800/60 px-4 py-2 text-white">
-		<Button on:click={() => (showSearch = !showSearch)}>
-			Quick
-		</Button>
+	<div class="sticky top-0 grid min-h-12 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 border-y border-gray-700 bg-gray-800/60 px-4 py-2 text-white">
+	<Button on:click={() => (showSearch = !showSearch)}>
+		Quick
+	</Button>
 
-		<div class="flex flex-1 items-center rounded-lg border border-gray-700 bg-gray-900 px-3 py-2">
-			<img src={loop} alt="Search" class="h-5 w-5 opacity-80" />
-			<input
-				bind:value={exerciseFilterInput}
-				class="flex-1 bg-transparent px-2 text-white outline-none placeholder-gray-400"
-				aria-label="Search"
-				autocomplete="off"
-				inputmode="search"
-				placeholder="Search"
-				type="search"
-			/>
-		</div>
-
-		<Button on:click={hello}>
-			Add Exercise
-		</Button>
+	<div class="min-w-0 flex items-center rounded-lg border border-gray-700 bg-gray-900 py-2">
+		<img src={loop} alt="Search" class="h-5 opacity-80" />
+		<input
+			bind:value={exerciseFilterInput}
+			class="w-full min-w-0 flex-1 bg-transparent px-2 text-white outline-none placeholder-gray-400"
+			aria-label="Search"
+			autocomplete="off"
+			inputmode="search"
+			placeholder="Search"
+			type="search"
+		/>
 	</div>
+
+	<Button on:click={hello}>
+		Add Exercise
+	</Button>
+</div>
 {:else}
 	<div class="sticky top-0 flex min-h-12 items-center gap-2 overflow-x-auto border-y border-gray-700 bg-gray-800/60 px-4 py-2 whitespace-nowrap text-white">
 		<Button on:click={() => (showSearch = !showSearch)}>
