@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import PageHeader from '../lib/structure/pageheader.svelte';
 	import { Toaster } from 'svelte-5-french-toast';
-	import { completedProgramDaysHistory } from '../lib/stores/data_store';
+	import {personalProgram, completedProgramDaysHistory, Exerciseslist, builtPrograms, CurrentActiveBuiltProgram } from '../lib/stores/data_store';
 	// import { pwaInfo } from 'virtual:pwa-info';
 	// let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
 	let { children } = $props();
@@ -38,6 +38,11 @@
 		window.addEventListener('appinstalled', onAppInstalled);
 
 		completedProgramDaysHistory.init();
+		Exerciseslist.init()
+		personalProgram.init()
+		builtPrograms.init()
+		CurrentActiveBuiltProgram.init()
+
 		updateMobileStatus();
 
 		ready = true;

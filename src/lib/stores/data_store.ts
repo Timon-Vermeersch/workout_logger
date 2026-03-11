@@ -151,7 +151,7 @@ export const completedProgramDaysHistory = persistedWritable<DayHistory[]>(
 
 
 //Exerciseslist (persistent)
-export const Exerciseslist = writable<GlobalExerciselist>({
+export const Exerciseslist = persistedWritable<GlobalExerciselist>('Exerciseslist',{
 	exercises: [
 		{
 			id: 1,
@@ -192,12 +192,12 @@ export const Exerciseslist = writable<GlobalExerciselist>({
 	]
 });
 //personalProgram gets populated when the currentActiveBuiltProgram get loaded and this is this initialization (persistent?)
-export const personalProgram = writable<ProgramDay>({
+export const personalProgram = persistedWritable<ProgramDay>('personalProgram',{
 	dayNumber: 1,
 	exercises: []
 });
 //builtPrograms is your actual book containing all your programs (persistent)
-export const builtPrograms = writable<Array<builtProgram>>([
+export const builtPrograms = persistedWritable<Array<builtProgram>>('builtPrograms',[
 	// this obj is 1 selectedTobuild
 	{
 		name: 'Nsuns1',
@@ -310,7 +310,7 @@ export const builtPrograms = writable<Array<builtProgram>>([
 	},
 ]);
 //CurrentActiveBuiltProgram is just a setting of which builtprogram to display and to work with (probably not persistent but a setting thing?)
-export const CurrentActiveBuiltProgram = writable<ActiveProgramRef>({
+export const CurrentActiveBuiltProgram = persistedWritable<ActiveProgramRef>('CurrentActiveBuiltProgram',{
 	name: 'Nsuns1',
 	currentDay: 1,
 	daysAmount: 2

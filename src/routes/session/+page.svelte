@@ -44,6 +44,7 @@
 	});
 
 	function setupDay() {
+		
 		currentActiveBuiltProgramName = $CurrentActiveBuiltProgram.name;
 		currentActiveBuiltProgramDayNumber = $CurrentActiveBuiltProgram.currentDay;
 
