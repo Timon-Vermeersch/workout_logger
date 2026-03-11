@@ -4,11 +4,8 @@
 	import PageHeader from '../lib/structure/pageheader.svelte';
 	import { Toaster } from 'svelte-5-french-toast';
 	import { completedProgramDaysHistory } from '../lib/stores/data_store';
-	import { pwaInfo } from 'virtual:pwa-info';
-	
-
-	let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
-
+	// import { pwaInfo } from 'virtual:pwa-info';
+	// let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
 	let { children } = $props();
 	let { isMobile, type, ready } = $state({
 		isMobile: false,
@@ -25,6 +22,7 @@
 	let canInstall = $state(false);
 
 	onMount(() => {
+		detectSWUpdate()
 		const onBeforeInstallPrompt = (e: Event) => {
 			e.preventDefault();
 			deferredPrompt = e;
@@ -59,6 +57,22 @@
 
 		deferredPrompt = null;
 		canInstall = false;
+	}
+
+	async function detectSWUpdate() {
+		const registration = await navigator.serviceWorker.ready
+
+		registration.addEventListener('updatefound', ()=>{
+			const newSW = registration.installing
+			newSW?.addEventListener('statechange', ()=>{
+				if(newSW.state === 'installed'){
+					if (confirm('new update')){
+						newSW.postMessage({type:'SKIP_WAITING'})
+						window.location.reload()
+					}
+				}
+			})
+		})
 	}
 </script>
 
