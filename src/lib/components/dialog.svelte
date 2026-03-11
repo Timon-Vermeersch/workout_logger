@@ -19,8 +19,8 @@ dialog {
 
     border-radius: var(--border-radius);
     border-width:0px;
-    transition: all 2s;
-    animation: vanish 1s;
+    transition: all 1s;
+    animation: vanish 0.0s;
     
 }
 
