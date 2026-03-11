@@ -8,7 +8,7 @@
 			e.currentTarget.click();
 		}
 	}}
-	class="rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white shadow transition hover:bg-gray-700 active:scale-95"
+	class="flex justify-center rounded-lg border border-gray-700 bg-gray-800 px-2 py-1 text-white shadow transition hover:bg-gray-700 active:scale-95"
 >
 	<slot />
 </div>

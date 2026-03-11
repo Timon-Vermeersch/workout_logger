@@ -17,7 +17,7 @@
 	</div>
 </HeaderTopBar>
 
-<div class="min-h-[calc(100vh-64px)] bg-gray-700">
+<div class="BODY min-h-[calc(100vh-56px)] bg-gray-700 text-white">
 	<Button>Reset Data</Button>
 	<Button>not even a button</Button>
 </div>

@@ -12,7 +12,7 @@
 	// }
 </script>
 
-<div class="sticky top-0   3 grid min-h-12 grid-cols-[25%_50%_25%] items-center bg-gray-800 text-white">
+<div class="sticky top-0 grid min-h-12 grid-cols-[25%_50%_25%] items-center bg-gray-800 text-white">
 	<div class="flex justify-center rounded-4xl hover:bg-gray-700">
 		<button
 			on:click={(e) => {
