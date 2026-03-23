@@ -1,1 +1,16 @@
 @import 'tailwindcss';
+@theme {
+  --color-brand-accent: #22C55E;
+  --color-brand-primary: #3B82F6;
+  --color-brand-primary-light: #60A5FA;
+
+  --color-ui-bg: #2C3440;
+  --color-ui-tile: #1E252E;
+  --color-ui-surface: #2E3C52;
+
+  --color-session-bg: #2C3E50;
+  --color-session-tile: #34495E;
+
+  --color-builder-bar: #29303C;
+  
+}

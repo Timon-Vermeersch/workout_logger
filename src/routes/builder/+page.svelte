@@ -238,24 +238,24 @@ setBuildTemp();
 </script>
 
 <!-- title -->
-<div class=' sticky top-0 div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-gray-800 text-white min-h-12'>
-  <div class='flex justify-center hover:bg-gray-700 rounded-4xl'>
-      <button on:click={() => setActiveProgram(selectedToBuild)}>
+<div class=' sticky top-0 div2 items-center grid 3 grid-cols-[25%_50%_25%] bg-builder-bar text-white min-h-12'>
+  <div class='flex justify-center hover:bg-ui-bg rounded-4xl font-semibold '>
+      <button class='text-white/60' on:click={() => setActiveProgram(selectedToBuild)}>
         Set current!
       </button>
   </div>
 
-  <select bind:value={selectedToBuildName} on:change={setBuild} class="flex pr-2   hover:bg-gray-700  rounded justify-center items-center bg-gray-800 text-white text-center">
+  <select bind:value={selectedToBuildName} on:change={setBuild} class="flex pr-2 hover:bg-ui-bg  rounded justify-center items-center text-white text-center">
       {#each $builtPrograms as availableProgram}
           <option value="{availableProgram.name}">{availableProgram.name}</option>
       {/each}
   </select>
 
-  <Button class='flex justify-center hover:bg-gray-700 rounded-4xl' on:click={() => dialog.showModal()}>Plus(+)</Button>
+  <button class='flex justify-center  hover:bg-ui-bg rounded-4xl text-white/60 font-semibold' on:click={() => dialog.showModal()}>+</button>
 </div>
 
-<div class="BODY min-h-[calc(100vh-56px)] bg-gray-700 text-white">
-  <div class="flex flex-col flex-auto space-y-4">
+<div class="BODY min-h-[calc(100vh-56px)] bg-ui-bg  text-white">
+  <div class="flex flex-col flex-auto space-y-4 pt-4">
       <div>
           {#if selectedToBuild}
               <div>
@@ -267,12 +267,12 @@ setBuildTemp();
                   on:swipe={(event:SwipeCustomEvent) => handler(event, dayIndex)}
                   data-day-index={dayIndex}>
                   <CollapsibleSection headerText={`${day.dayNumber}. ${day.label}`}>
-                      <div class="bg-gray-800 p-3 rounded-lg shadow m-2 border border-gray-700">
+                      <div class="bg-ui-tile p-3 rounded-lg shadow  border border-gray-700">
                       
                         {#if day.exercises.length > 0}
                           {#each day.exercises as { exerciseId, sets }, exerciseIndex}
                           {@const exercise = lookupExerciseById(exerciseId)}
-                              <div class="border border-gray-700 rounded-md my-2 p-2 bg-gray-700">
+                              <div class="border border-gray-700 rounded-md my-2 p-2 bg-ui-bg">
                                 <div class="grid grid-cols-2 text-md font-bold text-white mb-1">
                                   <div class="flex justify-center items-center">
                                     {exercise?.name ?? 'Unknown exercise'}
@@ -311,7 +311,7 @@ setBuildTemp();
                                     <span class="font-medium flex-start text-gray-200">Set {set.setNumber}:</span>
                                     <input 
                                       placeholder={set.reps ?? ''} 
-                                      class="border border-gray-500 rounded-md w-14 mx-1 p-1 text-center focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-700 text-white"
+                                      class="border border-gray-500 rounded-md w-14 mx-1 p-1 text-center focus:outline-none focus:ring-2 focus:ring-purple-500 bg-ui-bg text-white"
                                       type="number"
                                     />
                                     <span class="text-gray-300">reps</span>
@@ -347,12 +347,12 @@ setBuildTemp();
 
 
 <Dialog bind:dialog={dialog} on:close={() => console.log('closed')}>
-  <div class="p-6 bg-gray-800 text-white w-80">
+  <div class="p-6 bg-ui-tile text-white w-80">
     <h2 class="text-xl font-bold mb-4 text-center">Add Program</h2>
     <form on:submit|preventDefault={handleAddProgram} class="flex flex-col space-y-4">
       <input
         id="programName"
-        class="border   p-2 bg-gray-700 text-white   focus:ring-purple-500"
+        class="border   p-2 bg-ui-bg text-white   focus:ring-purple-500"
         bind:value={enterName}
         type="text"
         placeholder="Enter program name"
@@ -368,7 +368,7 @@ setBuildTemp();
 </Dialog>
 
 <Dialog bind:dialog={dialogChangeDayLabel}>
-  <div class="p-6 bg-gray-800 text-white w-80">
+  <div class="p-6 bg-ui-tile text-white w-80">
     <h2 class="text-xl font-bold mb-4 text-center">Change Day Label</h2>
     <form
       class="flex flex-col space-y-4"
@@ -378,7 +378,7 @@ setBuildTemp();
       }}
     >
       <input
-        class="border p-2 bg-gray-700 text-white focus:ring-purple-500"
+        class="border p-2 bg-ui-bg text-white focus:ring-purple-500"
         bind:value={newLabelInput}
         type="text"
         placeholder="Enter new label"
@@ -401,7 +401,7 @@ setBuildTemp();
 </Dialog>
 
 <Dialog bind:dialog={dialogAddExercise}>
-  <div class="p-6 bg-gray-800 text-white w-96 max-w-full ">
+  <div class="p-6 bg-ui-tile text-white w-96 max-w-full ">
     <h2 class="text-xl font-bold mb-4">Choose your Pokemon</h2>
 
     <div class="space-y-3 max-h-64 overflow-y-auto">
@@ -423,7 +423,7 @@ setBuildTemp();
 </Dialog>
 
 <Dialog bind:dialog={dialogDeleteProgramDayConfirmation}>
-  <div class="p-6 bg-gray-800 text-white w-80">
+  <div class="p-6 bg-ui-tile text-white w-80">
     <h2 class="text-xl font-bold mb-4 text-center">Confirm Deletion</h2>
     <p class="text-center text-gray-300 font-semibold">
       Are you sure you want to delete
@@ -459,7 +459,7 @@ setBuildTemp();
 </Dialog>
 
 <Dialog bind:dialog={dialogDeleteExerciseConfirmation}>
-  <div class="p-6 bg-gray-800 text-white w-80">
+  <div class="p-6 bg-ui-tile text-white w-80">
     <h2 class="text-xl font-bold mb-4 text-center">Confirm Deletion</h2>
     <p class="text-center text-gray-300">
       Are you sure you want to delete this exercise?

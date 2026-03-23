@@ -168,9 +168,9 @@
 			<div
 				class="grid [grid-template-columns:35%_30%_35%] items-center rounded bg-gray-800 p-4 text-white"
 			>
-				<div class="text-center">Current: {currentActiveBuiltProgramName}</div>
+				<div class="text-center opacity-60">Current: {currentActiveBuiltProgramName}</div>
 				<button class="text-center font-bold">{currentDayLabel}</button>
-				<div class="text-center">{formattedDate}</div>
+				<div class="text-center opacity-60">{formattedDate}</div>
 			</div>
 
 			<Stopwatch />
@@ -183,7 +183,7 @@
 						<div class="mb-2 grid grid-cols-2">
 							<h2 class="Title flex flex-col flex-wrap font-semibold text-white">
 								{index + 1}: {exercise.name || 'Unknown exercise'}
-								<div class="mb-1 text-xs text-gray-400">4 Sets : 12 Reps</div>
+								<div class="mb-1 text-xs opacity-60">4 Sets : 12 Reps</div>
 							</h2>
 
 							<div class="Buttons align-center m-1 flex h-12 items-center justify-end space-x-2">

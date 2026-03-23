@@ -14,12 +14,12 @@
 
 h3 {
   margin: 0;
-  font-size: 1.1em;
+  font-size: 0.9rem;
   color: white;
 }
 
 button {
-  background-color: var(--gray-700, #374151);
+  background-color: var(--gray-700, #1E252E);
   color: white;
   display: flex;
   justify-content: space-between;
